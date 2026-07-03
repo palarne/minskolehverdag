@@ -1,34 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="no">
 <head>
-<title>minskolehverdag</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Min skolehverdag</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>minskolehverdag</h1>
+<div class="container">
 
-<div id="start">
-<input id="pid" placeholder="Deltakernummer">
-<button onclick="go()">Neste</button>
-</div>
+  <h1>Min skolehverdag</h1>
 
-<div id="mode" style="display:none">
-<label><input type="radio" name="m" value="uten"> Uten karakterer</label>
-<label><input type="radio" name="m" value="med"> Med karakterer</label>
-<button onclick="start()">Start</button>
-</div>
+  <!-- START -->
+  <div id="start">
+    <p>Spørsmålene du skal svare på er for å forstå mer om hvordan en skolehverdag er for deg.</p>
 
-<div id="q" style="display:none">
-<h2 id="t"></h2>
-<div id="o"></div>
-<textarea id="c"></textarea>
-<button onclick="back()">Tilbake</button>
-<button onclick="next()">Neste</button>
-</div>
+    <h3>Oppskrift</h3>
+    <ol>
+      <li>Les ett spørsmål om gangen</li>
+      <li>Sett kryss i riktig svar</li>
+      <li>Du kan velge flere svar der det passer</li>
+      <li>Det finnes ingen riktige eller gale svar</li>
+      <li>Det tar ca 20 minutter</li>
+    </ol>
 
-<div id="done" style="display:none">
-<h2>Ferdig</h2>
+    <p><b>Svarene brukes kun for å bli bedre kjent med hvordan du opplever skolehverdagen din.</b></p>
+
+    <input id="pid" placeholder="Deltakernummer">
+
+    <button onclick="nextStep()">Neste</button>
+  </div>
+
+  <!-- VALG -->
+  <div id="choose" style="display:none;">
+    <h3>Velg skjema</h3>
+
+    <button onclick="start('uten-karakterer')">Uten karakterer</button>
+    <button onclick="start('med-karakterer')">Med karakterer</button>
+  </div>
+
+  <!-- SPØRSMÅL -->
+  <div id="quiz" style="display:none;">
+    <h2 id="question"></h2>
+
+    <div id="options"></div>
+
+    <p>Kan du si noe mer?</p>
+    <textarea id="comment"></textarea>
+
+    <div class="nav">
+      <button onclick="back()">Tilbake</button>
+      <button onclick="next()">Neste</button>
+    </div>
+  </div>
+
+  <!-- FERDIG -->
+  <div id="done" style="display:none;">
+    <h2>Takk for svar!</h2>
+  </div>
+
 </div>
 
 <script src="app.js"></script>
