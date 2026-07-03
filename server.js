@@ -1,38 +1,38 @@
 import express from "express";
 import cors from "cors";
-import sqlite3 from "sqlite3";
+import fs from "fs";
 
 const app = express();
-const db = new sqlite3.Database("./db.sqlite");
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-db.run(`
-CREATE TABLE IF NOT EXISTS responses (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-participantId TEXT,
-mode TEXT,
-answers TEXT
-)
-`);
+// Hent skjema
+app.get("/api/survey/:type", (req, res) => {
+  const type = req.params.type;
+  const file = `./data/${type}.json`;
 
-app.post("/submit", (req,res)=>{
-const {participantId,mode,answers}=req.body;
+  if (!fs.existsSync(file)) {
+    return res.status(404).json({ error: "Fant ikke skjema" });
+  }
 
-db.run(
-"INSERT INTO responses (participantId,mode,answers) VALUES (?,?,?)",
-[participantId,mode,JSON.stringify(answers)]
-);
-
-res.json({ok:true});
+  const data = JSON.parse(fs.readFileSync(file));
+  res.json(data);
 });
 
-app.get("/responses",(req,res)=>{
-db.all("SELECT * FROM responses",(err,rows)=>{
-res.json(rows);
-});
+// Lagre svar
+app.post("/api/submit", (req, res) => {
+  const entry = {
+    time: new Date(),
+    ...req.body
+  };
+
+  fs.appendFileSync("responses.json", JSON.stringify(entry) + "\n");
+
+  res.json({ ok: true });
 });
 
-app.listen(3000,()=>console.log("Server kjører"));
+app.listen(3000, () => {
+  console.log("Server kjører");
+});
