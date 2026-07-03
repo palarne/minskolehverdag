@@ -1,4 +1,5 @@
 import express from "express";
+import nodemailer from "nodemailer";
 import cors from "cors";
 import fs from "fs";
 
