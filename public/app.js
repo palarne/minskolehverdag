@@ -21,27 +21,50 @@ async function start(type) {
 }
 
 function show() {
+  const q = questions[index];
+
   document.getElementById("question").innerText =
     `Spørsmål ${index + 1} av ${questions.length}`;
 
-  const q = questions[index];
-
   let html = "";
 
-  q.options.forEach(o => {
-    html += `<label><input type="checkbox" value="${o}"> ${o}</label><br>`;
-  });
+  if (q.type === "single") {
+    q.options.forEach(o => {
+      html += `<label><input type="radio" name="opt" value="${o}"> ${o}</label>`;
+    });
+  }
+
+  if (q.type === "multi") {
+    q.options.forEach(o => {
+      html += `<label><input type="checkbox" value="${o}"> ${o}</label>`;
+    });
+  }
+
+  if (q.type === "text") {
+    html += `<textarea id="textAnswer"></textarea>`;
+  }
 
   document.getElementById("options").innerHTML = html;
 }
 
 function next() {
-  const selected = [...document.querySelectorAll("input:checked")]
-    .map(e => e.value);
+  let answer = [];
+
+  const radios = document.querySelectorAll('input[type="radio"]:checked');
+  const checks = document.querySelectorAll('input[type="checkbox"]:checked');
+
+  if (radios.length > 0) {
+    answer = radios[0].value;
+  } else if (checks.length > 0) {
+    answer = [...checks].map(c => c.value);
+  } else {
+    const text = document.getElementById("textAnswer");
+    if (text) answer = text.value;
+  }
 
   answers[index] = {
-    answer: selected,
-    comment: document.getElementById("comment").value
+    question: questions[index].question,
+    answer
   };
 
   index++;
