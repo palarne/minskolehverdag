@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Minskolehverdag">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Minskolehverdag.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

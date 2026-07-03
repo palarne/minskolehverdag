@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>minskolehverdag</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>minskolehverdag</h1>
+
+<div id="start">
+<input id="pid" placeholder="Deltakernummer">
+<button onclick="go()">Neste</button>
+</div>
+
+<div id="mode" style="display:none">
+<label><input type="radio" name="m" value="uten"> Uten karakterer</label>
+<label><input type="radio" name="m" value="med"> Med karakterer</label>
+<button onclick="start()">Start</button>
+</div>
+
+<div id="q" style="display:none">
+<h2 id="t"></h2>
+<div id="o"></div>
+<textarea id="c"></textarea>
+<button onclick="back()">Tilbake</button>
+<button onclick="next()">Neste</button>
+</div>
+
+<div id="done" style="display:none">
+<h2>Ferdig</h2>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
