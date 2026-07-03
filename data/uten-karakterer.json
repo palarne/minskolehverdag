@@ -1,4 +1,10 @@
-[
+[[
+  {
+    "question": "TEST: Fungerer dette spørsmålet?",
+    "type": "single",
+    "options": ["Ja", "Nei"]
+  }
+]
   {
     "question": "Blir du stresset om morgenen før du skal på skolen?",
     "type": "single",
