@@ -23,7 +23,7 @@ app.get("/api/survey/:type", (req, res) => {
 });
 
 // Lagre svar
-app.post("/api/submit", (req, res) => {
+app.post("/api/submit", async (req, res) => {
   const entry = {
     time: new Date(),
     data: req.body
@@ -31,8 +31,28 @@ app.post("/api/submit", (req, res) => {
 
   fs.appendFileSync("responses.json", JSON.stringify(entry) + "\n");
 
-  // enkel e-post-løsning (Render støtter dette via SMTP)
-  console.log("NYTT SKJEMA SENDT:", entry);
+  // EMAIL SETUP
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: "sandra.samuelsen@osloskolen.no",
+    subject: "Nytt skjema - Min skolehverdag",
+    text: JSON.stringify(entry, null, 2)
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("E-post sendt!");
+  } catch (err) {
+    console.log("E-post feilet:", err);
+  }
 
   res.json({ ok: true });
 });
