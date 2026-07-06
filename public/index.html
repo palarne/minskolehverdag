@@ -9,96 +9,68 @@
 </head>
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <!-- STARTSIDE -->
+    <div id="start">
+        <h1>Min Skolehverdag</h1>
 
-        <div id="start">
+        <p>Deltaker-ID</p>
 
-            <h1>Min Skolehverdag</h1>
+        <input
+            type="text"
+            id="pid"
+            placeholder="Skriv inn deltaker-ID">
 
-            <p>Skriv inn deltaker-ID:</p>
+        <br><br>
 
-            <input
-                id="pid"
-                type="text"
-                placeholder="Deltaker-ID">
-
-            <br><br>
-
-            <button onclick="go()">
-                Neste
-            </button>
-
-        </div>
-
-        <!-- VELG SKJEMA -->
-
-        <div id="mode" style="display:none;">
-
-            <h2>Velg spørreskjema</h2>
-
-            <label>
-                <input
-                    type="radio"
-                    name="m"
-                    value="med">
-                Med karakterer
-            </label>
-
-            <br><br>
-
-            <label>
-                <input
-                    type="radio"
-                    name="m"
-                    value="uten">
-                Uten karakterer
-            </label>
-
-            <br><br>
-
-            <button onclick="start()">
-                Start
-            </button>
-
-        </div>
-
-        <!-- SPØRSMÅL -->
-
-        <div id="questionPage" style="display:none;">
-
-            <p id="questionNumber"></p>
-
-            <h2 id="questionText"></h2>
-
-            <div id="answerArea"></div>
-
-            <br><br>
-
-            <button onclick="back()">
-                Tilbake
-            </button>
-
-            <button onclick="next()">
-                Neste
-            </button>
-
-        </div>
-
-        <!-- FERDIG -->
-
-        <div id="done" style="display:none;">
-
-            <h2>Takk for deltakelsen!</h2>
-
-            <p>Svarene dine er lagret.</p>
-
-        </div>
-
+        <button onclick="go()">
+            Neste
+        </button>
     </div>
 
-    <script src="app.js"></script>
+    <div id="mode" style="display:none;">
+        <h2>Velg spørreskjema</h2>
+
+        <label>
+            <input type="radio" name="m" value="med">
+            Med karakterer
+        </label>
+
+        <br><br>
+
+        <label>
+            <input type="radio" name="m" value="uten">
+            Uten karakterer
+        </label>
+
+        <br><br>
+
+        <button onclick="start()">
+            Start
+        </button>
+    </div>
+
+    <div id="questionPage" style="display:none;">
+        <p id="questionNumber"></p>
+
+        <h2 id="questionText"></h2>
+
+        <div id="answerArea"></div>
+
+        <br><br>
+
+        <button onclick="back()">Tilbake</button>
+        <button onclick="next()">Neste</button>
+    </div>
+
+    <div id="done" style="display:none;">
+        <h2>Takk for deltakelsen!</h2>
+        <p>Svarene dine er lagret.</p>
+    </div>
+
+</div>
+
+<script src="app.js"></script>
 
 </body>
 </html>
