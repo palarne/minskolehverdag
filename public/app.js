@@ -5,14 +5,7 @@ let current = 0;
 let answers = [];
 
 function go() {
-    const pidField = document.getElementById("pid");
-
-    if (!pidField) {
-        alert("Fant ikke deltakerfeltet.");
-        return;
-    }
-
-    pid = pidField.value.trim();
+    pid = document.getElementById("pid").value.trim();
 
     if (pid === "") {
         alert("Skriv inn deltaker-ID");
@@ -35,7 +28,7 @@ function start() {
 
     mode = selected.value;
 
-    fetch(`/data/${mode}.json`)
+    fetch("/data/" + mode + ".json")
         .then(function(response) {
             return response.json();
         })
@@ -51,20 +44,12 @@ function start() {
             showQuestion();
         })
         .catch(function(error) {
-
-            console.error(error);
-
-            alert(
-                "Kunne ikke laste spørreskjemaet. Sjekk med.json eller uten.json."
-            );
+            console.log(error);
+            alert("Kunne ikke laste spørsmålene.");
         });
 }
 
 function showQuestion() {
-
-    if (current < 0 || current >= questions.length) {
-        return;
-    }
 
     const q = questions[current];
 
@@ -77,9 +62,6 @@ function showQuestion() {
     document.getElementById("questionText").innerText =
         q.text;
 
-    const answerArea =
-        document.getElementById("answerArea");
-
     let html = "";
 
     if (q.type === "radio") {
@@ -90,7 +72,7 @@ function showQuestion() {
                 '<label>' +
                 '<input type="radio" name="answer" value="' +
                 option +
-                '">' +
+                '"> ' +
                 option +
                 '</label><br>';
         });
@@ -104,7 +86,7 @@ function showQuestion() {
                 '<label>' +
                 '<input type="checkbox" name="answer" value="' +
                 option +
-                '">' +
+                '"> ' +
                 option +
                 '</label><br>';
         });
@@ -113,12 +95,10 @@ function showQuestion() {
     else if (q.type === "text") {
 
         html =
-            '<textarea id="textAnswer" rows="6" style="width:100%;"></textarea>';
+            '<textarea id="textAnswer" rows="5" style="width:100%;"></textarea>';
     }
 
     else if (q.type === "scale") {
-
-        html = "";
 
         for (let i = q.min; i <= q.max; i++) {
 
@@ -126,58 +106,13 @@ function showQuestion() {
                 '<label style="margin-right:10px;">' +
                 '<input type="radio" name="answer" value="' +
                 i +
-                '">' +
+                '"> ' +
                 i +
                 '</label>';
         }
     }
 
-    answerArea.innerHTML = html;
-
-    restoreAnswer();
-}
-
-function restoreAnswer() {
-
-    const saved = answers[current];
-
-    if (saved === undefined) {
-        return;
-    }
-
-    if (Array.isArray(saved)) {
-
-        saved.forEach(function(value) {
-
-            const el =
-                document.querySelector(
-                    'input[value="' + value + '"]'
-                );
-
-            if (el) {
-                el.checked = true;
-            }
-        });
-
-        return;
-    }
-
-    const textField =
-        document.getElementById("textAnswer");
-
-    if (textField) {
-        textField.value = saved;
-        return;
-    }
-
-    const radio =
-        document.querySelector(
-            'input[value="' + saved + '"]'
-        );
-
-    if (radio) {
-        radio.checked = true;
-    }
+    document.getElementById("answerArea").innerHTML = html;
 }
 
 function collectAnswer() {
@@ -188,3 +123,76 @@ function collectAnswer() {
 
         const selected =
             document.querySelector(
+                'input[name="answer"]:checked'
+            );
+
+        if (selected) {
+            return selected.value;
+        }
+
+        return "";
+    }
+
+    if (q.type === "checkbox") {
+
+        return Array.from(
+            document.querySelectorAll(
+                'input[name="answer"]:checked'
+            )
+        ).map(function(item) {
+            return item.value;
+        });
+    }
+
+    if (q.type === "text") {
+
+        const field =
+            document.getElementById("textAnswer");
+
+        if (field) {
+            return field.value;
+        }
+    }
+
+    return "";
+}
+
+function next() {
+
+    answers[current] = collectAnswer();
+
+    current++;
+
+    if (current >= questions.length) {
+
+        fetch("/submit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                participantId: pid,
+                mode: mode,
+                answers: answers
+            })
+        })
+        .then(function() {
+
+            document.getElementById("questionPage").style.display = "none";
+
+            document.getElementById("done").style.display = "block";
+        });
+
+        return;
+    }
+
+    showQuestion();
+}
+
+function back() {
+
+    if (current > 0) {
+        current--;
+        showQuestion();
+    }
+}
