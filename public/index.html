@@ -1,4 +1,56 @@
-<div id="questionPage" style="display:none">
+<!DOCTYPE html>
+<html lang="no">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Min Skolehverdag</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+  <div id="start">
+    <h1>Min Skolehverdag</h1>
+
+    <input
+      id="pid"
+      type="text"
+      placeholder="Deltaker-ID">
+
+    <button onclick="go()">
+      Neste
+    </button>
+  </div>
+
+  <div id="mode" style="display:none">
+
+    <h2>Velg spørreskjema</h2>
+
+    <label>
+      <input type="radio" name="m" value="med">
+      Med karakterer
+    </label>
+
+    <br>
+
+    <label>
+      <input type="radio" name="m" value="uten">
+      Uten karakterer
+    </label>
+
+    <br><br>
+
+    <button onclick="start()">
+      Start
+    </button>
+
+  </div>
+
+  <div id="questionPage" style="display:none">
 
     <p id="questionNumber"></p>
 
@@ -9,18 +61,26 @@
     <br>
 
     <button onclick="back()">
-        Tilbake
+      Tilbake
     </button>
 
     <button onclick="next()">
-        Neste
+      Neste
     </button>
 
-</div>
+  </div>
 
-<div id="done" style="display:none">
-    <h2>Takk for deltakelsen!</h2>
+  <div id="done" style="display:none">
+
+    <h2>Takk for hjelpen!</h2>
+
     <p>Svarene dine er lagret.</p>
+
+  </div>
+
 </div>
 
 <script src="app.js"></script>
+
+</body>
+</html>
