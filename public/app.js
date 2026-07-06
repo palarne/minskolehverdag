@@ -1,3 +1,68 @@
+let questions = [];
+let current = 0;
+let pid = "";
+let mode = "";
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.getElementById("nextBtn")
+        .addEventListener("click", go);
+
+    document.getElementById("startBtn")
+        .addEventListener("click", startSurvey);
+
+    document.getElementById("backBtn")
+        .addEventListener("click", previousQuestion);
+
+    document.getElementById("questionNextBtn")
+        .addEventListener("click", nextQuestion);
+});
+
+function go() {
+
+    pid = document.getElementById("pid").value.trim();
+
+    if (!pid) {
+        alert("Skriv inn deltaker-ID");
+        return;
+    }
+
+    document.getElementById("start").style.display = "none";
+    document.getElementById("mode").style.display = "block";
+}
+
+function startSurvey() {
+
+    const selected =
+        document.querySelector('input[name="m"]:checked');
+
+    if (!selected) {
+        alert("Velg et spørreskjema");
+        return;
+    }
+
+    mode = selected.value;
+
+    fetch("/data/" + mode + ".json")
+        .then(response => response.json())
+        .then(data => {
+
+            questions = data;
+            current = 0;
+
+            document.getElementById("mode").style.display = "none";
+            document.getElementById("questionPage").style.display = "block";
+
+            showQuestion();
+        })
+        .catch(error => {
+
+            console.error(error);
+
+            alert("JSON-feil: " + error.message);
+        });
+}
+
 function showQuestion() {
 
     const q = questions[current];
@@ -40,17 +105,15 @@ function showQuestion() {
         });
     }
 
-    html += `
-        <br><br>
-        <strong>Kommentar (valgfritt)</strong>
-        <br>
-        <textarea
-            id="commentAnswer"
-            rows="4"
-            style="width:100%;"
-            placeholder="Skriv kommentar her">
-        </textarea>
-    `;
+    else if (q.type === "text") {
 
-    document.getElementById("answerArea").innerHTML = html;
-}
+        html = `
+            <textarea
+                id="textAnswer"
+                rows="5"
+                style="width:100%;"
+                placeholder="Skriv svaret ditt her">
+            </textarea>
+        `;
+    }
+
