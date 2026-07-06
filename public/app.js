@@ -1,198 +1,216 @@
-let pid = "";
-let mode = "";
 let questions = [];
 let current = 0;
 let answers = [];
+let pid = "";
+let mode = "";
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  document.getElementById("nextBtn")
+    .addEventListener("click", go);
+
+  document.getElementById("startBtn")
+    .addEventListener("click", startSurvey);
+
+  document.getElementById("backBtn")
+    .addEventListener("click", previousQuestion);
+
+  document.getElementById("questionNextBtn")
+    .addEventListener("click", nextQuestion);
+
+});
 
 function go() {
-    pid = document.getElementById("pid").value.trim();
 
-    if (pid === "") {
-        alert("Skriv inn deltaker-ID");
-        return;
-    }
+  pid = document.getElementById("pid").value.trim();
 
-    document.getElementById("start").style.display = "none";
-    document.getElementById("mode").style.display = "block";
+  if (!pid) {
+    alert("Skriv inn deltaker-ID");
+    return;
+  }
+
+  document.getElementById("start").style.display = "none";
+  document.getElementById("mode").style.display = "block";
 }
 
-function start() {
+function startSurvey() {
 
-    const selected =
-        document.querySelector('input[name="m"]:checked');
+  const selected =
+    document.querySelector("input[name='m']:checked");
 
-    if (!selected) {
-        alert("Velg Med karakterer eller Uten karakterer");
-        return;
-    }
+  if (!selected) {
+    alert("Velg Med karakterer eller Uten karakterer");
+    return;
+  }
 
-    mode = selected.value;
+  mode = selected.value;
 
-    fetch("/data/" + mode + ".json")
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data) {
+  fetch(`/data/${mode}.json`)
+    .then(response => response.json())
+    .then(data => {
 
-            questions = data;
-            current = 0;
-            answers = [];
+      questions = data;
+      current = 0;
+      answers = [];
 
-            document.getElementById("mode").style.display = "none";
-            document.getElementById("questionPage").style.display = "block";
+      document.getElementById("mode").style.display = "none";
+      document.getElementById("questionPage").style.display = "block";
 
-            showQuestion();
-        })
-        .catch(function(error) {
-            console.log(error);
-            alert("Kunne ikke laste spørsmålene.");
-        });
+      showQuestion();
+
+    })
+    .catch(error => {
+      console.error(error);
+      alert("Fant ikke spørreskjema");
+    });
 }
 
 function showQuestion() {
 
-    const q = questions[current];
+  const q = questions[current];
 
-    document.getElementById("questionNumber").innerText =
-        "Spørsmål " +
-        (current + 1) +
-        " av " +
-        questions.length;
+  document.getElementById("questionNumber").textContent =
+    `Spørsmål ${current + 1} av ${questions.length}`;
 
-    document.getElementById("questionText").innerText =
-        q.text;
+  document.getElementById("questionText").textContent =
+    q.text;
 
-    let html = "";
+  let html = "";
 
-    if (q.type === "radio") {
+  if (q.type === "radio") {
 
-        q.options.forEach(function(option) {
+    q.options.forEach(option => {
 
-            html +=
-                '<label>' +
-                '<input type="radio" name="answer" value="' +
-                option +
-                '"> ' +
-                option +
-                '</label><br>';
-        });
+      html += `
+        <label>
+          <input type="radio"
+                 name="answer"
+                 value="${option}">
+          ${option}
+        </label>
+        <br>
+      `;
+    });
+  }
+
+  else if (q.type === "checkbox") {
+
+    q.options.forEach(option => {
+
+      html += `
+        <label>
+          <input type="checkbox"
+                 name="answer"
+                 value="${option}">
+          ${option}
+        </label>
+        <br>
+      `;
+    });
+  }
+
+  else if (q.type === "text") {
+
+    html = `
+      <textarea
+        id="textAnswer"
+        rows="5"
+        style="width:100%">
+      </textarea>
+    `;
+  }
+
+  else if (q.type === "scale") {
+
+    for (let i = q.min; i <= q.max; i++) {
+
+      html += `
+        <label style="margin-right:10px">
+          <input type="radio"
+                 name="answer"
+                 value="${i}">
+          ${i}
+        </label>
+      `;
     }
+  }
 
-    else if (q.type === "checkbox") {
-
-        q.options.forEach(function(option) {
-
-            html +=
-                '<label>' +
-                '<input type="checkbox" name="answer" value="' +
-                option +
-                '"> ' +
-                option +
-                '</label><br>';
-        });
-    }
-
-    else if (q.type === "text") {
-
-        html =
-            '<textarea id="textAnswer" rows="5" style="width:100%;"></textarea>';
-    }
-
-    else if (q.type === "scale") {
-
-        for (let i = q.min; i <= q.max; i++) {
-
-            html +=
-                '<label style="margin-right:10px;">' +
-                '<input type="radio" name="answer" value="' +
-                i +
-                '"> ' +
-                i +
-                '</label>';
-        }
-    }
-
-    document.getElementById("answerArea").innerHTML = html;
+  document.getElementById("answerArea")
+    .innerHTML = html;
 }
 
-function collectAnswer() {
+function nextQuestion() {
 
-    const q = questions[current];
+  answers[current] = getAnswer();
 
-    if (q.type === "radio" || q.type === "scale") {
+  current++;
 
-        const selected =
-            document.querySelector(
-                'input[name="answer"]:checked'
-            );
+  if (current >= questions.length) {
 
-        if (selected) {
-            return selected.value;
-        }
+    fetch("/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        participantId: pid,
+        mode: mode,
+        answers: answers
+      })
+    })
+    .then(() => {
 
-        return "";
-    }
+      document.getElementById("questionPage")
+        .style.display = "none";
 
-    if (q.type === "checkbox") {
+      document.getElementById("done")
+        .style.display = "block";
+    });
 
-        return Array.from(
-            document.querySelectorAll(
-                'input[name="answer"]:checked'
-            )
-        ).map(function(item) {
-            return item.value;
-        });
-    }
+    return;
+  }
 
-    if (q.type === "text") {
-
-        const field =
-            document.getElementById("textAnswer");
-
-        if (field) {
-            return field.value;
-        }
-    }
-
-    return "";
+  showQuestion();
 }
 
-function next() {
+function previousQuestion() {
 
-    answers[current] = collectAnswer();
+  if (current > 0) {
 
-    current++;
-
-    if (current >= questions.length) {
-
-        fetch("/submit", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                participantId: pid,
-                mode: mode,
-                answers: answers
-            })
-        })
-        .then(function() {
-
-            document.getElementById("questionPage").style.display = "none";
-
-            document.getElementById("done").style.display = "block";
-        });
-
-        return;
-    }
+    current--;
 
     showQuestion();
+  }
 }
 
-function back() {
+function getAnswer() {
 
-    if (current > 0) {
-        current--;
-        showQuestion();
-    }
+  const q = questions[current];
+
+  if (q.type === "radio" || q.type === "scale") {
+
+    const selected =
+      document.querySelector(
+        "input[name='answer']:checked"
+      );
+
+    return selected ? selected.value : "";
+  }
+
+  if (q.type === "checkbox") {
+
+    return [...document.querySelectorAll(
+      "input[name='answer']:checked"
+    )].map(x => x.value);
+  }
+
+  if (q.type === "text") {
+
+    const text =
+      document.getElementById("textAnswer");
+
+    return text ? text.value : "";
+  }
+
+  return "";
 }
