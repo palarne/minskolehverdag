@@ -45,10 +45,8 @@ function startSurvey() {
     mode = selected.value;
 
     fetch("/data/" + mode + ".json")
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
+        .then(response => response.json())
+        .then(data => {
 
             questions = data;
             current = 0;
@@ -59,11 +57,11 @@ function startSurvey() {
 
             showQuestion();
         })
-        .catch(function (error) {
+        .catch(error => {
 
             console.error(error);
 
-            alert("Fant ikke spørreskjema");
+            alert("Feil i JSON-filen");
         });
 }
 
@@ -108,19 +106,7 @@ function showQuestion() {
     else if (q.type === "text") {
 
         html =
-            '<textarea id="textAnswer" rows="5"></textarea>';
-    }
-
-    else if (q.type === "scale") {
-
-        for (let i = q.min; i <= q.max; i++) {
-
-            html +=
-                '<label style="margin-right:10px">' +
-                '<input type="radio" name="answer" value="' + i + '">' +
-                i +
-                '</label>';
-        }
+            '<textarea id="textAnswer" rows="5" style="width:100%;"></textarea>';
     }
 
     document.getElementById("answerArea").innerHTML =
@@ -131,7 +117,7 @@ function getAnswer() {
 
     const q = questions[current];
 
-    if (q.type === "radio" || q.type === "scale") {
+    if (q.type === "radio") {
 
         const selected =
             document.querySelector(
@@ -192,4 +178,3 @@ function previousQuestion() {
         showQuestion();
     }
 }
-``
