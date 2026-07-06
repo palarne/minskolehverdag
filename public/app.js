@@ -1,20 +1,20 @@
-import express from "express";
-import cors from "cors";
+console.log("app.js lastet");
 
-const app = express();
+document.addEventListener("DOMContentLoaded", () => {
 
-app.use(cors());
-app.use(express.json());
+    document.getElementById("nextBtn")
+        .addEventListener("click", () => {
 
-app.use(express.static("public"));
-app.use("/data", express.static("data"));
+            const pid =
+                document.getElementById("pid").value.trim();
 
-app.post("/submit", (req, res) => {
-    res.json({ ok: true });
-});
+            if (!pid) {
+                alert("Skriv inn deltaker-ID");
+                return;
+            }
 
-const PORT = process.env.PORT || 3000;
+            document.getElementById("start").style.display = "none";
+            document.getElementById("mode").style.display = "block";
+        });
 
-app.listen(PORT, () => {
-    console.log("Server kjører");
 });
