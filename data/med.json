@@ -1,13 +1,15 @@
+
 [
   {
-    "text": "Bl "type": "radio",    "text": "Blir du stresset om morgenen før du skal på skolen?",
-    "options": ["Nei","Noen ganger","Vet ikke","Litt stressa","Ja, veldig stressa"]
-  },
-  {
-    "text": "Kan du si noe mer?",
-    "type": "text"
-  },
-  {
+    "text": "Blir du stresset om morgenen før du skal på skolen?",
+    "type": "radio",
+    "options": [
+      "Nei",
+      "Noen ganger",
+      "Vet ikke",
+      "Litt stressa",
+      "Ja, veldig stressa
+
     "text": "Blir skoledagen din slitsom hvis du har sovet lite dagen før?",
     "type": "radio",
     "options": ["Nei","Noen ganger","Vet ikke","Litt","Ja, veldig"]
