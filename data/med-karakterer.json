@@ -1,367 +1,123 @@
 [
   {
-    "question": "Blir du stresset om morgenen før du skal på skolen?",
-    "type": "single",
-    "options": [
-      "Nei",
-      "Noen ganger",
-      "Vet ikke",
-      "Litt stressa",
-      "Ja, veldig stressa"
-    ],
-    "comment": true
+    "text": "Blir du stresset om morgenen før du skal på skolen?",
+    "type": "radio",
+    "options": ["Nei","Noen ganger","Vet ikke","Litt stressa","Ja, veldig stressa"]
   },
   {
-    "question": "Blir skoledagen din slitsom hvis du har sovet lite dagen før?",
-    "type": "single",
-    "options": [
-      "Nei",
-      "Noen ganger",
-      "Vet ikke",
-      "Litt",
-      "Ja, veldig"
-    ],
-    "comment": true
-  },
-  {
-    "question": "Er det noe hjemme om morgenen som kan være stressende?",
-    "type": "single",
-    "options": [
-      "Nei",
-      "Noen ganger",
-      "Vet ikke",
-      "Litt stress",
-      "Ja, veldig stress"
-    ],
-    "comment": true
-  },
-  {
-    "question": "Er det stressende å komme seg til og fra skolen?",
-    "type": "single",
-    "options": [
-      "Nei",
-      "Noen ganger",
-      "Vet ikke",
-      "Litt stress",
-      "Ja, veldig stress"
-    ],
-    "comment": true
-  },
-  {
-    "question": "Hvordan kommer du deg til og fra skolen?",
+    "text": "Kan du si noe mer?",
     "type": "text"
   },
   {
-    "question": "Er det stressende å komme inn på skolen alene og gå inn i klasserommet?",
-    "type": "single",
-    "options": [
-      "Nei",
-      "Noen ganger",
-      "Vet ikke",
-      "Litt stress",
-      "Ja, veldig stress"
-    ],
-    "comment": true
+    "text": "Blir skoledagen din slitsom hvis du har sovet lite dagen før?",
+    "type": "radio",
+    "options": ["Nei","Noen ganger","Vet ikke","Litt","Ja, veldig"]
   },
   {
-    "question": "Påvirker støy (snakking, lyder) i klasserommet din skolehverdag?",
-    "type": "single",
-    "options": [
-      "Nei",
-      "Noen ganger",
-      "Vet ikke",
-      "Litt",
-      "Ja, veldig"
-    ],
-    "comment": true
+    "text": "Kan du si noe mer?",
+    "type": "text"
   },
   {
-    "question": "Påvirker sterkt lys (store vinduer, taklys) skolehverdagen din?",
-    "type": "single",
-    "options": [
-      "Nei",
-      "Noen ganger",
-      "Vet ikke",
-      "Litt",
-      "Ja, veldig"
-    ],
-    "comment": true
+    "text": "Er det noe hjemme om morgenen som kan være stressende?",
+    "type": "radio",
+    "options": ["Nei","Noen ganger","Vet ikke","Litt stress","Ja, veldig stress"]
   },
   {
-    "question": "Påvirker lukt (parfyme, mat, klasserommet) skolehverdagen din?",
-    "type": "single",
-    "options": [
-      "Nei",
-      "Noen ganger",
-      "Vet ikke",
-      "Litt",
-      "Ja, veldig"
-    ],
-    "comment": true
+    "text": "Kan du si noe mer?",
+    "type": "text"
   },
   {
-    "question": "Hvor viktig er det for deg å ha en ukeplan for skolehverdagen slik at du kan komme forberedt og vite hva som skjer?",
-    "type": "single",
-    "options": [
-      "Ikke viktig",
-      "Litt viktig",
-      "Vet ikke",
-      "Ganske viktig",
-      "Veldig viktig"
-      ,
-      ,
-{
-  "question": "Hvor lett er det for deg å arbeide selvstendig i timen uten hjelp?",
-  "type": "single",
-  "options": ["Ikke lett", "Litt lett", "Vet ikke", "Ganske lett", "Veldig lett"],
-  "comment": true
-},
-{
-  "question": "Hvor lett er det å arbeide med en oppgave i gruppe?",
-  "type": "single",
-  "options": ["Ikke lett", "Litt lett", "Vet ikke", "Ganske lett", "Veldig lett"],
-  "comment": true
-},
-{
-  "question": "Hvor vanskelig er det for deg å skrive tekster på skolen?",
-  "type": "single",
-  "options": ["Ikke lett", "Litt lett", "Vet ikke", "Ganske enkelt", "Veldig enkelt"]
-},
-{
-  "question": "Liker du best å skrive på PC/Mac eller på papir med penn/blyant?",
-  "type": "single",
-  "options": ["PC/Mac", "Papir med penn/blyant"]
-},
-{
-  "question": "Hvor vanskelig er det for deg å lese eller snakke høyt i klassen?",
-  "type": "single",
-  "options": ["Ikke lett", "Litt lett", "Vet ikke", "Ganske enkelt", "Veldig enkelt"],
-  "comment": true
-},
-{
-  "question": "Hvor vanskelig er det for deg å si ifra til lærer hvis du ikke forstår?",
-  "type": "single",
-  "options": ["Ikke lett", "Litt lett", "Vet ikke", "Ganske enkelt", "Veldig enkelt"],
-  "comment": true
-},
-{
-  "question": "Hvor ofte er oppgavene for lette for meg i undervisningen?",
-  "type": "single",
-  "options": ["Aldri", "Sjeldent", "Vet ikke", "Ofte", "Veldig ofte"],
-  "comment": true
-},
-{
-  "question": "Hvor ofte er oppgavene for vanskelige for meg i undervisningen?",
-  "type": "single",
-  "options": ["Aldri", "Sjeldent", "Vet ikke", "Ofte", "Veldig ofte"],
-  "comment": true
-},
-{
-  "question": "Hvor vanskelig er det for deg å gjøre feil på skolen?",
-  "type": "single",
-  "options": ["Veldig vanskelig", "Litt vanskelig", "Vet ikke", "Det går greit", "Det går veldig fint"],
-  "comment": true
-},
-{
-  "question": "Blir du stresset av prøver og eksamen?",
-  "type": "single",
-  "options": ["Nei", "Noen ganger", "Vet ikke", "Litt stressa", "Ja, veldig stressa"],
-  "comment": true
-},
-{
-  "question": "Fra 1 til 10, hvor godt liker du disse fagene? (10 er best og 1 er minst)",
-  "type": "text"
-,
-{
-  "question": "Hvilket fag ønsker du å kunne ha muntlige prøver i?",
-  "type": "multi",
-  "options": [
-    "Kroppsøving",
-    "Geografi",
-    "Samfunnskunnskap",
-    "Engelsk",
-    "Naturfag",
-    "Historie",
-    "Matematikk",
-    "Fremmedspråk",
-    "Religion og etikk",
-    "Programfag VG2/VG3"
-  ]
-},
-{
-  "question": "Hvilke fag ønsker du å ha skriftlige prøver i?",
-  "type": "multi",
-  "options": [
-    "Kroppsøving",
-    "Geografi",
-    "Samfunnskunnskap",
-    "Engelsk",
-    "Naturfag",
-    "Historie",
-    "Matematikk",
-    "Fremmedspråk",
-    "Religion og etikk",
-    "Programfag VG2/VG3"
-  ]
-},
-{
-  "question": "Jeg forstår hva lærerne sier i undervisningen.",
-  "type": "single",
-  "options": ["Nei", "Noen ganger", "Vet ikke", "Litt", "Ja"],
-  "comment": true
-},
-{
-  "question": "Jeg spør lærer om hjelp dersom jeg ikke forstår hva jeg skal gjøre i undervisningen.",
-  "type": "single",
-  "options": ["Nei", "Noen ganger", "Vet ikke", "Ja, innimellom", "Ja, alltid"],
-  "comment": true
-},
-{
-  "question": "Føler du at lærerne forstår hvordan du har det på skolen?",
-  "type": "single",
-  "options": ["Nei", "Noen ganger", "Vet ikke", "Ganske ofte", "Ja, veldig godt"],
-  "comment": true
-},
-{
-  "question": "Er det voksne på skolen du føler forstår deg og kan hjelpe deg når noe blir vanskelig?",
-  "type": "single",
-  "options": ["Nei", "Noen ganger", "Vet ikke", "Ganske ofte", "Ja, veldig godt"],
-  "comment": true
-},
-{
-  "question": "Blir du sliten av å være på skolen?",
-  "type": "single",
-  "options": ["Nei", "Noen ganger", "Vet ikke", "Ganske sliten", "Ja, veldig sliten"]
-},
-{
-  "question": "Hvis du blir stresset, hva trenger du for å roe ned?",
-  "type": "multi",
-  "options": [
-    "Pause",
-    "Gå ut av klasserommet",
-    "Være alene",
-    "Snakke med en voksen",
-    "Høre på musikk",
-    "Bruke PC/telefon",
-    "Få forklaring en gang til",
-    "Roligere sted",
-    "Mer tid",
-    "Vet ikke"
-  ]
-},
-{
-  "question": "Hva gjør du når du blir stresset eller sliten på skolen?",
-  "type": "multi",
-  "options": [
-    "Går ut av timen",
-    "Snakker med en voksen",
-    "Bruker PC/telefon",
-    "Blir stille",
-    "Annet"
-  ]
-},
-{
-  "question": "Hvordan lærer du best når du skal lære nye ting?",
-  "type": "multi",
-  "options": [
-    "Lærer forklarer muntlig",
-    "Bilder/video",
-    "Få eksempler",
-    "Jobbe praktisk",
-    "Jobbe alene",
-    "Jobbe med andre",
-    "Tydelig plan",
-    "Ekstra tid",
-    "Annet"
-  ]
-}
-      ,
-{
-  "question": "Hva kan gjøre skolehverdagen vanskelig for deg?",
-  "type": "multi",
-  "options": [
-    "For mye støy",
-    "For mange beskjeder",
-    "For høyt tempo",
-    "Vanskelig språk",
-    "Vanskelig å konsentrere seg",
-    "Gruppeoppgaver",
-    "Å snakke høyt foran andre",
-    "Vikar/ny lærer",
-    "Toalettene på skolen",
-    "Å spise",
-    "Rombytte",
-    "For mange mennesker",
-    "Brannalarmen",
-    "Annet"
-  ]
-},
-{
-  "question": "Hva ønsker du å bli flinkere til på skolen?",
-  "type": "multi",
-  "options": [
-    "Lese",
-    "Skrive",
-    "Matte",
-    "Snakke høyt i timen",
-    "Jobbe alene",
-    "Jobbe sammen med andre",
-    "Følge med i timen",
-    "Møte opp på skolen",
-    "Få flere venner",
-    "Annet"
-  ]
-},
-{
-  "question": "Har du venner på skolen?",
-  "type": "single",
-  "options": ["Nei", "Noen", "Vet ikke", "Ja, noen", "Ja, mange"]
-},
-{
-  "question": "Hva liker du å gjøre i friminuttene?",
-  "type": "multi",
-  "options": [
-    "Være alene",
-    "Snakke med venner",
-    "Bruke telefon/PC",
-    "Høre på musikk",
-    "Gå en tur",
-    "Være inne",
-    "Være ute",
-    "Spille spill/leke",
-    "Spise/slappe av",
-    "Annet"
-  ]
-},
-{
-  "question": "Føler du deg trygg på skolen?",
-  "type": "single",
-  "options": ["Nei", "Noen ganger", "Vet ikke", "Ofte", "Ja, alltid"]
-},
-{
-  "question": "Hva er du flink til på skolen?",
-  "type": "multi",
-  "options": [
-    "Lese",
-    "Skrive",
-    "Matte",
-    "Praktiske oppgaver",
-    "Bruke PC",
-    "Hjelpe andre",
-    "Samarbeide",
-    "Jobbe alene",
-    "Møte opp på skolen",
-    "Følge regler og rutiner",
-    "Være kreativ",
-    "Kroppsøving",
-    "Muntlige oppgaver",
-    "Huske ting",
-    "Tegne/male",
-    "Være snill mot andre"
-  ]
-},
-{
-  "question": "Hva vil du gjøre etter avsluttet videregående skole?",
-  "type": "text"
-}
-]
+    "text": "Er det stressende for deg å komme seg til og fra skolen?",
+    "type": "radio",
+    "options": ["Nei","Noen ganger","Vet ikke","Litt stress","Ja, veldig stress"]
+  },
+  {
+    "text": "Hvordan kommer du deg til og fra skolen?",
+    "type": "text"
+  },
+  {
+    "text": "Er det stressende å komme inn på skolen alene og gå inn i klasserommet?",
+    "type": "radio",
+    "options": ["Nei","Noen ganger","Vet ikke","Litt stress","Ja, veldig stress"]
+  },
+  {
+    "text": "Kan du si noe mer?",
+    "type": "text"
+  },
+  {
+    "text": "Påvirker støy (snakking, lyder) i klasserommet din skolehverdag?",
+    "type": "radio",
+    "options": ["Nei","Noen ganger","Vet ikke","Litt","Ja, veldig"]
+  },
+  {
+    "text": "Påvirker sterkt lys (store vinduer, taklys) skolehverdagen din?",
+    "type": "radio",
+    "options": ["Nei","Noen ganger","Vet ikke","Litt","Ja, veldig"]
+  },
+  {
+    "text": "Påvirker lukt (parfyme, mat, klasserommet) skolehverdagen din?",
+    "type": "radio",
+    "options": ["Nei","Noen ganger","Vet ikke","Litt","Ja, veldig"]
+  },
+  {
+    "text": "Hvor viktig er det for deg å ha en ukeplan for skolehverdagen?",
+    "type": "radio",
+    "options": ["Ikke viktig","Litt viktig","Vet ikke","Ganske viktig","Veldig viktig"]
+  },
+  {
+    "text": "Hvor lett er det for deg å arbeide selvstendig i timen uten hjelp?",
+    "type": "radio",
+    "options": ["Ikke lett","Litt lett","Vet ikke","Ganske lett","Veldig lett"]
+  },
+  {
+    "text": "Hvor lett er det å arbeide med en oppgave i gruppe?",
+    "type": "radio",
+    "options": ["Ikke lett","Litt lett","Vet ikke","Ganske lett","Veldig lett"]
+  },
+  {
+    "text": "Hvor vanskelig er det for deg å skrive tekster på skolen?",
+    "type": "radio",
+    "options": ["Ikke lett","Litt lett","Vet ikke","Ganske enkelt","Veldig enkelt"]
+  },
+  {
+    "text": "Liker du best å skrive på PC/Mac eller på papir med penn/blyant?",
+    "type": "radio",
+    "options": ["PC/Mac","Papir med penn/blyant"]
+  },
+  {
+    "text": "Hvor vanskelig er det for deg å lese eller snakke høyt i klassen?",
+    "type": "radio",
+    "options": ["Ikke lett","Litt lett","Vet ikke","Ganske enkelt","Veldig enkelt"]
+  },
+  {
+    "text": "Hvor vanskelig er det for deg å si ifra til lærer hvis du ikke forstår?",
+    "type": "radio",
+    "options": ["Ikke lett","Litt lett","Vet ikke","Ganske enkelt","Veldig enkelt"]
+  },
+  {
+    "text": "Hvor ofte er oppgavene for lette for meg i undervisningen?",
+    "type": "radio",
+    "options": ["Aldri","Sjeldent","Vet ikke","Ofte","Veldig ofte"]
+  },
+  {
+    "text": "Hvor ofte er oppgavene for vanskelige for meg i undervisningen?",
+    "type": "radio",
+    "options": ["Aldri","Sjeldent","Vet ikke","Ofte","Veldig ofte"]
+  },
+  {
+    "text": "Hvor vanskelig er det for deg å gjøre feil på skolen?",
+    "type": "radio",
+    "options": ["Veldig vanskelig","Litt vanskelig","Vet ikke","Det går greit","Det går veldig fint"]
+  },
+  {
+    "text": "Blir du stresset av prøver og eksamen?",
+    "type": "radio",
+    "options": ["Nei","Noen ganger","Vet ikke","Litt stressa","Ja, veldig stressa"]
+  },
+  {
+    "text": "Hvilket fag har du i år?",
+    "type": "text"
+  },
+  {
+    "text": "Hvilket fag ønsker du å kunne ha muntlige prøver i?",
+    "type": "checkbox",
