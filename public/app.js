@@ -23,8 +23,10 @@ async function start(type) {
 function show() {
   const q = questions[index];
 
-  document.getElementById("question").innerText =
-    `Spørsmål ${index + 1} av ${questions.length}`;
+ document.getElementById("question").innerHTML = `
+<h2>Spørsmål ${index + 1} av ${questions.length}</h2>
+<p>${q.question}</p>
+`;
 
   let html = "";
 
