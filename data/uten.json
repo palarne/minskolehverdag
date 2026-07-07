@@ -19,10 +19,17 @@
     "type": "radio",
     "options": ["Nei","Noen ganger","Vet ikke","Litt stress","Ja, veldig stress"]
   },
-  {
-    "text": "Hvordan kommer du deg til og fra skolen?",
-    "type": "text"
-  },
+{
+  "text": "Hvordan kommer du deg til og fra skolen?",
+  "type": "radio",
+  "options": [
+    "Tar kollektiv",
+    "Går til og fra skolen",
+    "Blir kjørt",
+    "Tar taxi",
+    "Annet"
+  ]
+},
   {
     "text": "Er det stressende å komme inn på skolen alene og gå inn i klasserommet/avdeling?",
     "type": "radio",
