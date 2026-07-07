@@ -88,13 +88,12 @@
     "type": "radio",
     "options": ["Aldri","Sjeldent","Vet ikke","Ofte","Veldig ofte"]
   },
-  {
-    "text": "Synes du det er trist eller flaut å gjøre feil på skolen?",
-    "type": "radio",
-    "options": ["Veldig","Litt","Vet ikke","Det går greit","Det går veldig fint"]
-  },
-  {
-  {
+{
+  "text": "Synes du det er trist eller flaut å gjøre feil på skolen?",
+  "type": "radio",
+  "options": ["Veldig","Litt","Vet ikke","Det går greit","Det går veldig fint"]
+},
+{
   "text": "Hvor godt liker du norsk fra 1 til 10?",
   "type": "scale",
   "min": 1,
@@ -147,19 +146,7 @@
   "type": "scale",
   "min": 1,
   "max": 10
-},
-{
-  "text": "Hvor godt liker du fremmedspråk fra 1 til 10?",
-  "type": "scale",
-  "min": 1,
-  "max": 10
-},
-{
-  "text": "Hvor godt liker du programfag fra 1 til 10?",
-  "type": "scale",
-  "min": 1,
-  "max": 10
-}
+
   },
   {
     "text": "Jeg forstår hva lærerne sier til meg i timen.",
