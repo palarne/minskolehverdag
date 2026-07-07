@@ -1,5 +1,6 @@
 let questions = [];
 let current = 0;
+let answers = [];
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -48,17 +49,19 @@ function startSurvey() {
 
             questions = data;
             current = 0;
+            answers = [];
 
             document.getElementById("mode").style.display = "none";
             document.getElementById("questionPage").style.display = "block";
 
             showQuestion();
+
         })
         .catch(error => {
 
             console.error(error);
-
             alert("Feil ved lasting av spørsmål");
+
         });
 }
 
@@ -112,6 +115,7 @@ function showQuestion() {
 
         html += `
             <textarea
+                id="mainAnswer"
                 rows="5"
                 style="width:100%;"
                 placeholder="Skriv svaret ditt her"></textarea>
@@ -126,52 +130,23 @@ function showQuestion() {
                 min="${q.min}"
                 max="${q.max}"
                 value="${q.min}"
+                id="scaleAnswer"
                 style="width:100%;">
 
             <p>${q.min} - ${q.max}</p>
         `;
     }
 
-    if (q.type !== "text") {
+    html += `
+        <br><br>
 
-        html += `
-            <br><br>
+        <strong>
+            Vil du si noe mer?
+        </strong>
 
-            <strong>Kommentar (valgfritt)</strong>
+        <br>
 
-            <br>
-
-            <textarea
-                rows="4"
-                style="width:100%;"
-                placeholder="Skriv kommentar her"></textarea>
-        `;
-    }
-
-    document.getElementById("answerArea").innerHTML = html;
-}
-
-function nextQuestion() {
-
-    current++;
-
-    if (current >= questions.length) {
-
-        document.getElementById("questionPage").style.display = "none";
-        document.getElementById("done").style.display = "block";
-
-        return;
-    }
-
-    showQuestion();
-}
-
-function previousQuestion() {
-
-    if (current > 0) {
-
-        current--;
-
-        showQuestion();
-    }
-}
+        <textarea
+            id="extraComment"
+            rows="4"
+            style="width:100%;"
