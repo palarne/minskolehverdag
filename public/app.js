@@ -128,20 +128,43 @@ function showQuestion() {
                 placeholder="Skriv svaret ditt her"></textarea>
         `;
 
-    } else if (q.type === "scale") {
+} else if (q.type === "scale") {
+
+    let i = current;
+
+    while (
+        i < questions.length &&
+        questions[i].type === "scale"
+    ) {
 
         html += `
-            <input
-                type="range"
-                min="${q.min}"
-                max="${q.max}"
-                value="${q.min}"
-                id="scaleAnswer"
-                style="width:100%;">
+            <div style="margin-bottom:25px;">
 
-            <p>Verdi fra ${q.min} til ${q.max}</p>
+                <strong>
+                    ${questions[i].text}
+                </strong>
+
+                <br><br>
+
+                <input
+                    type="range"
+                    min="${questions[i].min}"
+                    max="${questions[i].max}"
+                    value="5"
+                    id="scaleAnswer${i}"
+                    style="width:100%;">
+
+                <div>
+                    ${questions[i].min} - ${questions[i].max}
+                </div>
+
+            </div>
         `;
+
+        i++;
     }
+}
+
 
     html += `
         <br><br>
@@ -196,13 +219,32 @@ function nextQuestion() {
 
         answer = text ? text.value : "";
 
-    } else if (q.type === "scale") {
+} else if (q.type === "scale") {
 
-        const scale =
-            document.getElementById("scaleAnswer");
+    answer = {};
 
-        answer = scale ? scale.value : "";
+    let i = current;
+
+    while (
+        i < questions.length &&
+        questions[i].type === "scale"
+    ) {
+
+        const slider =
+            document.getElementById(
+                `scaleAnswer${i}`
+            );
+
+        answer[
+            questions[i].text
+        ] =
+            slider
+            ? slider.value
+            : "";
+
+        i++;
     }
+}
 
     const comment =
         document.getElementById("extraComment")
@@ -215,7 +257,19 @@ function nextQuestion() {
         comment: comment
     });
 
+   if (q.type === "scale") {
+
+    while (
+        current < questions.length &&
+        questions[current].type === "scale"
+    ) {
+        current++;
+    }
+
+} else {
+
     current++;
+}
 
     if (current >= questions.length) {
 
