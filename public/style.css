@@ -177,3 +177,19 @@ hr {
 .welcome-box hr {
     margin: 24px 0;
 }
+    .welcome-box {
+    border-left: 5px solid #2563eb;
+}
+
+.steps-box {
+    background: #f8fafc;
+}
+
+.steps-box p {
+    font-weight: 500;
+}
+
+.login-section {
+    background: #eff6ff;
+    border: 2px solid #bfdbfe;
+}
