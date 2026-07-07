@@ -1,85 +1,111 @@
 <!DOCTYPE html>
 <html lang="no">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Min Skolehverdag</title>
 
-  <link rel="stylesheet" href="style.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Min Skolehverdag</title>
+
+    style.css
 </head>
+
 <body>
 
-<div class="container">
+    <div class="container">
 
-  <div id="start">
-    <h1>Min Skolehverdag</h1>
+        <!-- Startside -->
 
-    <p>Deltaker-ID</p>
+        <div id="start">
 
-    <input
-      type="text"
-      id="pid"
-      placeholder="Skriv inn deltaker-ID">
+            <h1>Min Skolehverdag</h1>
 
-    <br><br>
+            <p>Deltaker-ID</p>
 
-    <button id="nextBtn">
-      Neste
-    </button>
-  </div>
+            <input
+                type="text"
+                id="pid"
+                placeholder="Skriv inn deltaker-ID">
 
-  <div id="mode" style="display:none;">
+            <br><br>
 
-    <h2>Velg spørreskjema</h2>
+            <button id="nextBtn">
+                Neste
+            </button>
 
-    <label>
-      <input type="radio" name="m" value="med">
-      Med karakterer
-    </label>
+        </div>
 
-    <br><br>
+        <!-- Valg av spørreskjema -->
 
-    <label>
-      <input type="radio" name="m" value="uten">
-      Uten karakterer
-    </label>
+        <div id="mode" style="display:none;">
 
-    <br><br>
+            <h2>Velg spørreskjema</h2>
 
-    <button id="startBtn">
-      Start
-    </button>
+            <label>
+                <input
+                    type="radio"
+                    name="m"
+                    value="med">
+                Med karakterer
+            </label>
 
-  </div>
+            <br><br>
 
-  <div id="questionPage" style="display:none;">
+            <label>
+                <input
+                    type="radio"
+                    name="m"
+                    value="uten">
+                Uten karakterer
+            </label>
 
-    <p id="questionNumber"></p>
+            <br><br>
 
-    <h2 id="questionText"></h2>
+            <button id="startBtn">
+                Start
+            </button>
 
-    <div id="answerArea"></div>
+        </div>
 
-    <br><br>
+        <!-- Spørsmål -->
 
-    <button id="backBtn">
-      Tilbake
-    </button>
+        <div id="questionPage" style="display:none;">
 
-    <button id="questionNextBtn">
-      Neste
-    </button>
+            <p id="questionNumber"></p>
 
-  </div>
+            <h2 id="questionText"></h2>
 
-  <div id="done" style="display:none;">
-    <h2>Takk for deltakelsen!</h2>
-    <p>Svarene dine er lagret.</p>
-  </div>
+            <div id="answerArea"></div>
 
-</div>
+            <br><br>
 
-<script src="app.js"></script>
+            <button id="backBtn">
+                Tilbake
+            </button>
+
+            <button id="questionNextBtn">
+                Neste
+            </button>
+
+        </div>
+
+        <!-- Ferdig -->
+
+        <div id="done" style="display:none;">
+
+            <h2>
+                Takk for deltakelsen!
+            </h2>
+
+            <p>
+                Svarene dine er registrert.
+            </p>
+
+        </div>
+
+    </div>
+
+    "></script>
 
 </body>
+
 </html>
