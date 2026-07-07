@@ -99,8 +99,21 @@
   "options": ["Nei", "Noen ganger", "Vet ikke", "Litt stressa", "Ja, veldig stressa"]
 },
 {
-  "text": "Hvilket fag har du i år?",
-  "type": "text"
+  "text": "Hvilke fag har du i år?",
+  "type": "checkbox",
+  "options": [
+    "Norsk",
+    "Engelsk",
+    "Matematikk",
+    "Naturfag",
+    "Samfunnskunnskap",
+    "Historie",
+    "Geografi",
+    "Religion og etikk",
+    "Kroppsøving",
+    "Fremmedspråk",
+    "Programfag"
+  ]
 },
 {
   "text": "Hvilket fag ønsker du å kunne ha muntlige prøver i?",
