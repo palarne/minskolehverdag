@@ -94,11 +94,10 @@
   "options": ["Veldig","Litt","Vet ikke","Det går greit","Det går veldig fint"]
 }
 {
-  "text": "Hvor godt liker du disse fagene? 1 = liker lite, 10 = liker best",
+  "text": "Hvor godt liker du norsk fra 1 til 10?",
   "type": "scale",
   "min": 1,
   "max": 10
-
 },
 {
   "text": "Hvor godt liker du engelsk fra 1 til 10?",
@@ -112,42 +111,7 @@
   "min": 1,
   "max": 10
 },
-{
-  "text": "Hvor godt liker du naturfag fra 1 til 10?",
-  "type": "scale",
-  "min": 1,
-  "max": 10
-},
-{
-  "text": "Hvor godt liker du samfunnskunnskap fra 1 til 10?",
-  "type": "scale",
-  "min": 1,
-  "max": 10
-},
-{
-  "text": "Hvor godt liker du historie fra 1 til 10?",
-  "type": "scale",
-  "min": 1,
-  "max": 10
-},
-{
-  "text": "Hvor godt liker du geografi fra 1 til 10?",
-  "type": "scale",
-  "min": 1,
-  "max": 10
-},
-{
-  "text": "Hvor godt liker du religion og etikk fra 1 til 10?",
-  "type": "scale",
-  "min": 1,
-  "max": 10
-},
-{
-  "text": "Hvor godt liker du kroppsøving fra 1 til 10?",
-  "type": "scale",
-  "min": 1,
-  "max": 10
-
+...
   },
   {
     "text": "Jeg forstår hva lærerne sier til meg i timen.",
