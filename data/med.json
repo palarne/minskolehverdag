@@ -74,7 +74,6 @@
     "options": ["Ikke lett", "Litt lett", "Vet ikke", "Ganske enkelt", "Veldig enkelt"]
   },
   {
-,
 {
   "text": "Hvor vanskelig er det for deg å si ifra til lærer hvis du ikke forstår?",
   "type": "radio",
