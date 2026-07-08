@@ -215,4 +215,72 @@ hr {
     .scale-numbers span.active {
         font-size: 18px;
     }
+/* ===== KANDIDATNUMMER ===== */
+
+.login-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.login-row input {
+    flex: 1;
+}
+
+.login-row button {
+    margin-top: 0;
+}
+
+/* ===== FREMDRIFTSLINJE ===== */
+
+#progressContainer {
+    width: 100%;
+    height: 10px;
+
+    background: #e2e8f0;
+
+    border-radius: 999px;
+
+    margin-bottom: 20px;
+
+    overflow: hidden;
+}
+
+#progressBar {
+    width: 0%;
+
+    height: 100%;
+
+    background: #2563eb;
+
+    border-radius: 999px;
+
+    transition: width 0.3s ease;
+}
+
+/* ===== SPØRRESKJEMA-KORT ===== */
+
+.survey-card {
+    display: block;
+
+    padding: 20px;
+
+    margin-bottom: 12px;
+
+    border: 2px solid #e2e8f0;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.survey-card:hover {
+    background: #eff6ff;
+    border-color: #2563eb;
+}
+
+.survey-card input[type="radio"] {
+    margin-right: 12px;
 }
