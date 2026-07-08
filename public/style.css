@@ -132,15 +132,14 @@ hr {
     border-top: 1px solid var(--border);
     margin: 20px 0;
 }
-
 .welcome-box {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
-    border-left: 5px solid #2563eb;
     border-radius: 16px;
     padding: 24px;
     margin-bottom: 30px;
 }
+`
 
 .steps-box {
     background: #f8fafc;
