@@ -194,9 +194,8 @@ hr {
     border: 2px solid #bfdbfe;
 }
 .scale-slider {
-    width: calc(100% - 60px);
-    margin-left: 30px;
-    margin-right: 30px;
+    width: 100%;
+    margin: 0;
 }
 ``
 }
@@ -247,31 +246,29 @@ hr {
 
     cursor: pointer;
 }
-
 .scale-numbers {
+    width: 100%;
+
     display: grid;
     grid-template-columns: repeat(10, 1fr);
 
-    width: calc(100% - 60px);
-    margin-left: 30px;
-    margin-right: 30px;
-
     text-align: center;
-    margin-top: 8px;
+
+    margin-top: 10px;
 
 }
 .scale-numbers span {
     color: #cbd5e1;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 600;
     transition: all 0.25s ease;
 }
+`
+}
 .scale-numbers span.active {
     color: #2563eb;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 800;
 
-    text-shadow:
-        0 0 10px rgba(37,99,235,0.35);
-
+    text-shadow: 0 0 12px rgba(37,99,235,0.4);
 }
