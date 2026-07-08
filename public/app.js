@@ -137,10 +137,43 @@ function showQuestion() {
 
         let i = current;
 
-        while (
-            i < questions.length &&
-            questions[i].type === "scale"
-        ) {
+    while (
+    i < questions.length &&
+    questions[i].type === "scale"
+) {
+    html += `
+    <div style="margin-bottom:25px;">
+        <label style="font-weight:600;">
+            ${questions[i].text}
+        </label>
+
+        <input
+            type="range"
+            min="${questions[i].min}"
+            max="${questions[i].max}"
+            value="5"
+            id="scaleAnswer${i}"
+            class="scale-slider"
+            oninput="updateScaleValue(${i}, this.value)">
+
+        <div
+            id="numbers${i}"
+            class="scale-numbers">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span class="active">5</span>
+            <span>6</span>
+            <span>7</span>
+            <span>8</span>
+            <span>9</span>
+            <span>10</span>
+        </div>
+    </div>
+    `;
+    i++;
+}
 
             html += `
                 <div style="margin-bottom:25px;">
@@ -289,6 +322,49 @@ function nextQuestion() {
     showQuestion();
 }
 function previousQuestion() {
+    function updateScaleValue(index, value) {
+
+    const numbers =
+        document.querySelectorAll(
+            `#numbers${index} span`
+        );
+
+    numbers.forEach(number => {
+        number.classList.remove("active");
+    });
+
+    numbers[value - 1].classList.add("active");
+}
+```[1](https://udeoslokommuneno-my.sharepoint.com/personal/sasaa189_osloskolen_no/Documents/Microsoft%20Copilot%20Chat-filer/app.js)
+
+---
+
+# Steg 4 – Åpne `style.css`
+
+Gå helt nederst i filen. [2](https://udeoslokommuneno-my.sharepoint.com/personal/sasaa189_osloskolen_no/Documents/Microsoft%20Copilot%20Chat-filer/style.css)
+
+Legg til:
+
+```css
+.scale-numbers {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.scale-numbers span {
+    color: #64748b;
+    font-size: 16px;
+    font-weight: 400;
+    transition: all 0.2s ease;
+}
+
+.scale-numbers span.active {
+    color: #2563eb;
+    font-size: 26px;
+    font-weight: 700;
+    transform: translateY(-6px);
+}
 
     // Hvis vi er inne på spørsmålssiden
     if (document.getElementById("questionPage").style.display !== "none") {
