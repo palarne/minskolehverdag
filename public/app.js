@@ -142,16 +142,31 @@ function showQuestion() {
                     ${questions[i].text}
                 </label>
 
-                <input
-                    type="range"
-                    min="${questions[i].min}"
-                    max="${questions[i].max}"
-                    value="5"
-                    id="scaleAnswer${i}"
-                    class="scale-slider"
-                    oninput="updateScaleValue(${i}, this.value)">
+             <div class="scale-wrapper">
 
-              <div id="numbers${i}" class="scale-numbers">
+    <input
+        type="range"
+        min="${questions[i].min}"
+        max="${questions[i].max}"
+        value="5"
+        id="scaleAnswer${i}"
+        class="scale-slider"
+        oninput="updateScaleValue(${i}, this.value)">
+
+    <div id="numbers${i}" class="scale-numbers">
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span class="active">5</span>
+        <span>6</span>
+        <span>7</span>
+        <span>8</span>
+        <span>9</span>
+        <span>10</span>
+    </div>
+
+</div>
     <span>1</span>
     <span>2</span>
     <span>3</span>
