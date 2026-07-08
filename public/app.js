@@ -62,7 +62,6 @@ function startSurvey() {
 
         });
 }
-
 function showQuestion() {
 
     const q = questions[current];
@@ -71,9 +70,7 @@ function showQuestion() {
         `Spørsmål ${current + 1} av ${questions.length}`;
 
     document.getElementById("questionText").innerText =
-        q.type === "scale"
-            ? ""
-            : q.text;
+        q.type === "scale" ? "" : q.text;
 
     let html = "";
 
@@ -119,13 +116,8 @@ function showQuestion() {
     } else if (q.type === "scale") {
 
         html += `
-            <h3>
-                Hvor godt liker du disse fagene?
-            </h3>
-
-            <p>
-                1 = liker lite, 10 = liker best
-            </p>
+            <h3>Hvor godt liker du disse fagene?</h3>
+            <p>1 = liker lite, 10 = liker best</p>
         `;
 
         let i = current;
@@ -193,8 +185,8 @@ function showQuestion() {
     }
 
     document.getElementById("answerArea").innerHTML = html;
-
 }
+
 
 function nextQuestion() {
 
