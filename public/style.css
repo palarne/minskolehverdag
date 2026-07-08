@@ -197,32 +197,38 @@ hr {
 
 .scale-wrapper {
     width: 100%;
+    padding: 0 12px;
 }
 
 .scale-slider {
     width: 100%;
     margin: 0;
+    cursor: pointer;
 }
 
 .scale-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
 
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
 
     border-radius: 50%;
+
     background: #2563eb;
     border: 3px solid white;
+
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.25);
 
     cursor: pointer;
 }
 
 .scale-slider::-moz-range-thumb {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
 
     border-radius: 50%;
+
     background: #2563eb;
     border: 3px solid white;
 
@@ -230,25 +236,51 @@ hr {
 }
 
 .scale-numbers {
+    width: 100%;
+
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    width: 100%;
-    text-align: center;
+
     margin-top: 10px;
+
+    text-align: center;
 }
 
 .scale-numbers span {
     color: #cbd5e1;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 600;
+
     transition: all 0.2s ease;
 }
 
 .scale-numbers span.active {
     background: #2563eb;
     color: white;
+
     border-radius: 8px;
-    font-size: 22px;
+
+    font-size: 24px;
     font-weight: 800;
+
     padding: 4px 0;
 }
+```[2](https://udeoslokommuneno-my.sharepoint.com/personal/sasaa189_osloskolen_no/Documents/Microsoft%20Copilot%20Chat-filer/style.css)[1](https://udeoslokommuneno-my.sharepoint.com/personal/sasaa189_osloskolen_no/Documents/Microsoft%20Copilot%20Chat-filer/app.js)
+
+### Veldig viktig
+
+I `app.js` må denne delen fortsatt være nøyaktig slik:
+
+```js
+<div id="numbers${i}" class="scale-numbers">
+    <span>1</span>
+    <span>2</span>
+    <span>3</span>
+    <span>4</span>
+    <span class="active">5</span>
+    <span>6</span>
+    <span>7</span>
+    <span>8</span>
+    <span>9</span>
+    <span>10</span>
+</div>
