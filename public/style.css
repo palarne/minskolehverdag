@@ -193,3 +193,27 @@ hr {
     background: #eff6ff;
     border: 2px solid #bfdbfe;
 }
+.scale-slider {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.scale-numbers {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.scale-numbers span {
+    color: #64748b;
+    font-size: 16px;
+    font-weight: 400;
+    transition: all 0.2s ease;
+}
+
+.scale-numbers span.active {
+    color: #2563eb;
+    font-size: 26px;
+    font-weight: 700;
+    transform: translateY(-6px);
+}
