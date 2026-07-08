@@ -288,13 +288,30 @@ function nextQuestion() {
 
     showQuestion();
 }
-
 function previousQuestion() {
 
-    if (current > 0) {
+    // Hvis vi er inne på spørsmålssiden
+    if (document.getElementById("questionPage").style.display !== "none") {
 
-        current--;
-        showQuestion();
+        // Gå tilbake et spørsmål
+        if (current > 0) {
+            current--;
+            showQuestion();
+        }
+
+        // Hvis vi står på første spørsmål
+        else {
+            document.getElementById("questionPage").style.display = "none";
+            document.getElementById("mode").style.display = "block";
+        }
+
+    }
+
+    // Hvis vi er på siden for valg av spørreskjema
+    else if (document.getElementById("mode").style.display !== "none") {
+
+        document.getElementById("mode").style.display = "none";
+        document.getElementById("start").style.display = "block";
 
     }
 }
