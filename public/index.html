@@ -10,14 +10,12 @@
 
 <div class="container">
 
-    <!-- STARTSIDE -->
     <div id="start">
 
         <h1>🏫 Min Skolehverdag 🏫</h1>
 
         <div class="welcome-box">
             <h3>Du skal svare på noen spørsmål om skolehverdagen din</h3>
-
             <p>✅ Det er frivillig å delta</p>
             <p>✅ Du kan hoppe over spørsmål</p>
             <p>✅ Ingen riktige eller gale svar</p>
@@ -34,16 +32,12 @@
                 id="pid"
                 placeholder="Skriv inn nummeret du har fått">
 
-            <button id="nextBtn">
-                Jeg er klar
-            </button>
+            <button id="nextBtn">Jeg er klar</button>
         </div>
 
     </div>
 
-    <!-- VALG AV SKJEMA -->
     <div id="mode" style="display:none;">
-
         <h2>Velg spørreskjema</h2>
 
         <label>
@@ -51,43 +45,30 @@
             Med karakterer
         </label>
 
+        <br><br>
+
         <label>
             <input type="radio" name="m" value="uten">
             Uten karakterer
         </label>
 
-        <button id="modeBackBtn" onclick="location.reload()">
-            Tilbake
-        </button>
+        <br><br>
 
-        <button id="startBtn">
-            Start
-        </button>
-
+        <button id="modeBackBtn">Tilbake</button>
+        <button id="startBtn">Start</button>
     </div>
 
-    <!-- SPØRSMÅL -->
     <div id="questionPage" style="display:none;">
-
         <p id="questionNumber"></p>
-
         <h2 id="questionText"></h2>
-
         <div id="answerArea"></div>
 
         <br><br>
 
-        <button id="backBtn">
-            Tilbake
-        </button>
-
-        <button id="questionNextBtn">
-            Neste
-        </button>
-
+        <button id="backBtn">Tilbake</button>
+        <button id="questionNextBtn">Neste</button>
     </div>
 
-    <!-- FERDIG -->
     <div id="done" style="display:none;">
         <h2>Takk for svarene dine!</h2>
         <p>Svarene dine er registrert.</p>
@@ -95,7 +76,6 @@
 
 </div>
 
-app.js
-
+app.js</script>
 </body>
 </html>
