@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import nodemailer from "nodemailer";
 
 const app = express();
 
@@ -9,13 +10,46 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use("/data", express.static("data"));
 
-app.post("/submit", (req, res) => {
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD
+    }
+});
 
-    console.log(req.body);
+app.post("/submit", async (req, res) => {
 
-    res.json({
-        ok: true
-    });
+    try {
+
+        const surveyResponse = req.body;
+
+        await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to: process.env.EMAIL_TO,
+            subject: `Survey response ${surveyResponse.kandidatnummer}`,
+            text: JSON.stringify(
+                surveyResponse,
+                null,
+                2
+            )
+        });
+
+        console.log("Survey response emailed");
+
+        res.json({
+            ok: true
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        res.status(500).json({
+            ok: false,
+            error: error.message
+        });
+    }
 });
 
 const PORT = process.env.PORT || 3000;
