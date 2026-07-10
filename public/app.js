@@ -174,7 +174,7 @@ function showQuestion() {
         }
     }
 
-    if (current !== questions.length - 1) {
+    if (current < questions.length - 1) {
 
         html += `
             <br><br>
@@ -197,123 +197,124 @@ function showQuestion() {
 
 function nextQuestion() {
 
-    const q = questions[current];
+    console.log(
+        "CLICKED NEXT",
+        current
+    );
 
-    let answer = "";
+    try {
+        if (current >= questions.length) {
+            submitSurvey();
+            return;
+        }
 
-    if (q.type === "radio") {
+        const q = questions[current];
 
-        const selected =
-            document.querySelector(
-                'input[name="answer"]:checked'
+        if (!q) {
+            console.error(
+                "Question not found",
+                current
             );
+            return;
+        }
 
-        answer = selected ? selected.value : "";
+        let answer = "";
 
-    } else if (q.type === "checkbox") {
+        if (q.type === "radio") {
 
-        answer = [];
-
-        document
-            .querySelectorAll(
-                'input[name="answer"]:checked'
-            )
-            .forEach(item => {
-
-                answer.push(item.value);
-
-            });
-
-    } else if (q.type === "text") {
-
-        const text =
-            document.getElementById("mainAnswer");
-
-        answer = text ? text.value : "";
-
-    } else if (q.type === "scale") {
-
-        answer = {};
-
-        let i = current;
-
-        while (
-            i < questions.length &&
-            questions[i].type === "scale"
-            ) {
-
-            const slider =
-                document.getElementById(
-                    `scaleAnswer${i}`
+            const selected =
+                document.querySelector(
+                    'input[name="answer"]:checked'
                 );
 
-            answer[questions[i].text] =
-                slider ? slider.value : "";
+            answer = selected ? selected.value : "";
 
-            i++;
+        } else if (q.type === "checkbox") {
+
+            answer = [];
+
+            document
+                .querySelectorAll(
+                    'input[name="answer"]:checked'
+                )
+                .forEach(item => {
+
+                    answer.push(item.value);
+
+                });
+
+        } else if (q.type === "text") {
+
+            const text =
+                document.getElementById("mainAnswer");
+
+            answer = text ? text.value : "";
+
+        } else if (q.type === "scale") {
+
+            answer = {};
+
+            let i = current;
+
+            while (
+                i < questions.length &&
+                questions[i].type === "scale"
+                ) {
+
+                const slider =
+                    document.getElementById(
+                        `scaleAnswer${i}`
+                    );
+
+                answer[questions[i].text] =
+                    slider ? slider.value : "";
+
+                i++;
+            }
         }
-    }
 
-    const comment =
-        document.getElementById("extraComment")
-            ? document.getElementById("extraComment").value
-            : "";
+        const comment =
+            document.getElementById("extraComment")
+                ? document.getElementById("extraComment").value
+                : "";
 
-    answers.push({
-        question: q.text,
-        answer: answer,
-        comment: comment
-    });
+        answers[current] = {
+            question: q.text,
+            answer,
+            comment
+        };
 
-    if (q.type === "scale") {
+        if (q.type === "scale") {
 
-        while (
-            current < questions.length &&
-            questions[current].type === "scale"
-            ) {
+            while (
+                current < questions.length &&
+                questions[current].type === "scale"
+                ) {
+                current++;
+            }
+
+        } else {
+
             current++;
         }
 
-    } else {
+        console.log(
+            "current:",
+            current,
+            "length:",
+            questions.length
+        );
 
-        current++;
-    }
+        if (current >= questions.length) {
 
-    console.log("current =", current);
-    console.log("questions.length =", questions.length);
-    console.log("question type =", q.type);
-
-    if (current >= questions.length) {
-        console.log("SUBMITTING");
-        fetch("/submit", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                kandidatnummer: document.getElementById("pid").value,
-                tidspunkt: new Date().toISOString(),
-                svar: answers
-            })
-        })
-            .then(response => response.json())
-            .then(data => {
-
-                console.log("Svar sendt til server:", data);
-
-                document.getElementById("questionPage").style.display = "none";
-                document.getElementById("done").style.display = "block";
-
-            })
-            .catch(error => {
-
-                console.error("Feil ved lagring:", error);
-
-                alert("Kunne ikke lagre svarene.");
-
-            });
-
-        return;
+            submitSurvey();
+            return;
+        }
+    } catch (e) {
+        console.error(
+            "nextQuestion failed",
+            e
+        );
     }
 
     showQuestion();
@@ -358,4 +359,49 @@ function updateScaleValue(index, value) {
     });
 
     numbers[value - 1].classList.add("active");
+}
+
+function submitSurvey() {
+
+    console.log("SUBMITTING");
+
+    fetch("/submit", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            kandidatnummer:
+            document.getElementById("pid").value,
+            tidspunkt:
+                new Date().toISOString(),
+            svar: answers
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+
+            console.log(
+                "Svar sendt til server:",
+                data
+            );
+
+            document.getElementById(
+                "questionPage"
+            ).style.display = "none";
+
+            document.getElementById(
+                "done"
+            ).style.display = "block";
+
+        })
+        .catch(error => {
+
+            console.error(error);
+
+            alert(
+                "Kunne ikke lagre svarene."
+            );
+
+        });
 }
