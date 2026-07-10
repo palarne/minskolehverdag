@@ -9,6 +9,6 @@
   "dependencies": {
     "express": "^4.21.2",
     "cors": "^2.8.5",
-    "nodemailer": "^6.9.14"
+    "resend": "^6.17.2"
   }
 }
