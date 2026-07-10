@@ -362,35 +362,24 @@ function updateScaleValue(index, value) {
 }
 
 function submitSurvey() {
-
-    console.log("SUBMITTING");
-
-    fetch("/submit", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            kandidatnummer: document.getElementById("pid").value,
-            tidspunkt: new Date().toISOString(),
-            svar: answers
-        })
-    })
-        .then(async response => {
-
-            console.log("STATUS", response.status);
-
-            const text = await response.text();
-
-            console.log("RESPONSE", text);
-
-            document.getElementById("questionPage").style.display = "none";
-            document.getElementById("done").style.display = "block";
-
-        })
-        .catch(error => {
-
-            console.error(error);
-
-        });
+    const surveyData = {
+        kandidatnummer: document.getElementById("pid").value,
+        tidspunkt: new Date().toISOString(),
+        svar: answers
+    };
+    const blob = new Blob(
+        [JSON.stringify(surveyData, null, 2)],
+        {
+            type: "application/json"
+        }
+    );
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `survey-${surveyData.kandidatnummer}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+    document.getElementById("questionPage").style.display = "none";
+    document.getElementById("done").style.display = "block";
 }
