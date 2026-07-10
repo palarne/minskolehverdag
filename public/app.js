@@ -371,37 +371,20 @@ function submitSurvey() {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            kandidatnummer:
-            document.getElementById("pid").value,
-            tidspunkt:
-                new Date().toISOString(),
+            kandidatnummer: document.getElementById("pid").value,
+            tidspunkt: new Date().toISOString(),
             svar: answers
         })
     })
-        .then(response => response.json())
-        .then(data => {
-
-            console.log(
-                "Svar sendt til server:",
-                data
-            );
-
-            document.getElementById(
-                "questionPage"
-            ).style.display = "none";
-
-            document.getElementById(
-                "done"
-            ).style.display = "block";
-
+        .then(response => {
+            console.log("Status:", response.status);
+            console.log("OK:", response.ok);
+            return response.text();
+        })
+        .then(text => {
+            console.log("Response:", text);
         })
         .catch(error => {
-
-            console.error(error);
-
-            alert(
-                "Kunne ikke lagre svarene."
-            );
-
+            console.error("FETCH FAILED", error);
         });
 }
