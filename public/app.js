@@ -376,15 +376,21 @@ function submitSurvey() {
             svar: answers
         })
     })
-        .then(response => {
-            console.log("Status:", response.status);
-            console.log("OK:", response.ok);
-            return response.text();
-        })
-        .then(text => {
-            console.log("Response:", text);
+        .then(async response => {
+
+            console.log("STATUS", response.status);
+
+            const text = await response.text();
+
+            console.log("RESPONSE", text);
+
+            document.getElementById("questionPage").style.display = "none";
+            document.getElementById("done").style.display = "block";
+
         })
         .catch(error => {
-            console.error("FETCH FAILED", error);
+
+            console.error(error);
+
         });
 }
