@@ -1,131 +1,298 @@
+const $ = id => document.getElementById(id);
+
 let questions = [];
 let current = 0;
 let answers = [];
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    const nextBtn = document.getElementById("nextBtn");
-    const startBtn = document.getElementById("startBtn");
-    const backBtn = document.getElementById("backBtn");
-    const questionNextBtn = document.getElementById("questionNextBtn");
-
-    if (nextBtn) nextBtn.addEventListener("click", go);
-    if (startBtn) startBtn.addEventListener("click", startSurvey);
-    if (backBtn) backBtn.addEventListener("click", previousQuestion);
-    if (questionNextBtn) questionNextBtn.addEventListener("click", nextQuestion);
-
+    $("nextBtn")?.addEventListener("click", go);
+    $("startBtn")?.addEventListener("click", startSurvey);
+    $("backBtn")?.addEventListener("click", previousQuestion);
+    $("questionNextBtn")?.addEventListener("click", nextQuestion);
 });
+
+function show(id) {
+    $(id).style.display = "block";
+}
+
+function hide(id) {
+    $(id).style.display = "none";
+}
 
 function go() {
 
-    const pid = document.getElementById("pid").value.trim();
+    const pid = $("pid").value.trim();
 
     if (!pid) {
         alert("Skriv inn deltaker-ID");
         return;
     }
 
-    document.getElementById("start").style.display = "none";
-    document.getElementById("mode").style.display = "block";
+    hide("start");
+    show("mode");
 }
 
-function startSurvey() {
+async function startSurvey() {
 
     const selected =
-        document.querySelector('input[name="m"]:checked');
+        document.querySelector(
+            'input[name="m"]:checked'
+        );
 
     if (!selected) {
         alert("Velg spørreskjema");
         return;
     }
 
-    const mode = selected.value;
+    try {
 
-    fetch("/data/" + mode + ".json")
-        .then(response => response.json())
-        .then(data => {
+        const response =
+            await fetch(
+                `/data/${selected.value}.json`
+            );
 
-            questions = data;
-            current = 0;
-            answers = [];
+        questions =
+            await response.json();
 
-            document.getElementById("mode").style.display = "none";
-            document.getElementById("questionPage").style.display = "block";
+        current = 0;
+        answers = [];
 
-            showQuestion();
+        hide("mode");
+        show("questionPage");
 
-        })
-        .catch(error => {
+        showQuestion();
 
-            console.error(error);
-            alert("Kunne ikke laste spørreskjemaet.");
+    } catch (error) {
 
-        });
+        console.error(error);
+
+        alert(
+            "Kunne ikke laste spørreskjemaet."
+        );
+    }
 }
 
 function showQuestion() {
-    console.log(
-        "Showing question",
-        current + 1,
-        "of",
-        questions.length
-    );
 
     const q = questions[current];
 
-    document.getElementById("questionNumber").innerText =
+    if (!q) {
+        return;
+    }
+
+    $("questionNumber").innerText =
         `Spørsmål ${current + 1} av ${questions.length}`;
 
-    document.getElementById("questionText").innerText =
-        q.type === "scale" ? "" : q.text;
+    $("questionText").innerText =
+        q.type === "scale"
+            ? ""
+            : q.text;
 
-    let html = "";
+    let html =
+        renderQuestion(q);
+
+    if (
+        current <
+        questions.length - 1
+    ) {
+        html += renderCommentField();
+    }
+
+    $("answerArea").innerHTML =
+        html;
+}
+
+function renderQuestion(q) {
+
+    switch (q.type) {
+
+        case "radio":
+            return renderRadio(q);
+
+        case "checkbox":
+            return renderCheckbox(q);
+
+        case "text":
+            return renderText();
+
+        case "scale":
+            return renderScale();
+
+        default:
+            return "";
+    }
+}
+
+function renderRadio(q) {
+
+    return q.options
+        .map(option => `
+            <label>
+                <input
+                    type="radio"
+                    name="answer"
+                    value="${option}">
+                ${option}
+            </label>
+        `)
+        .join("");
+}
+
+function renderCheckbox(q) {
+
+    return q.options
+        .map(option => `
+            <label>
+                <input
+                    type="checkbox"
+                    name="answer"
+                    value="${option}">
+                ${option}
+            </label>
+        `)
+        .join("");
+}
+
+function renderText() {
+
+    return `
+        <textarea
+            id="mainAnswer"
+            rows="5"
+            style="width:100%;"></textarea>
+    `;
+}
+
+function renderScale() {
+
+    let html = `
+        <h3>
+            Hvor godt liker du disse fagene?
+        </h3>
+
+        <p>
+            1 = liker lite,
+            10 = liker best
+        </p>
+    `;
+
+    let i = current;
+
+    while (
+        i < questions.length &&
+        questions[i].type === "scale"
+        ) {
+
+        html += `
+            <div style="margin-bottom:25px;">
+
+                <strong>
+                    ${questions[i].text}
+                </strong>
+
+                <div class="scale-wrapper">
+
+                    <input
+                        type="range"
+                        min="${questions[i].min}"
+                        max="${questions[i].max}"
+                        value="5"
+                        id="scaleAnswer${i}"
+                        class="scale-slider"
+                        oninput="
+                            updateScaleValue(
+                                ${i},
+                                this.value
+                            )
+                        ">
+
+                    <div
+                        id="numbers${i}"
+                        class="scale-numbers">
+
+                        <span>1</span>
+                        <span>2</span>
+                        <span>3</span>
+                        <span>4</span>
+                        <span class="active">
+                            5
+                        </span>
+                        <span>6</span>
+                        <span>7</span>
+                        <span>8</span>
+                        <span>9</span>
+                        <span>10</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+
+        i++;
+    }
+
+    return html;
+}
+
+function renderCommentField() {
+
+    return `
+        <br><br>
+
+        <strong>
+            Vil du si noe mer?
+        </strong>
+
+        <br>
+
+        <textarea
+            id="extraComment"
+            rows="4"
+            style="width:100%;"
+            placeholder="
+                Skriv her hvis du vil
+                utdype svaret ditt
+            ">
+        </textarea>
+    `;
+}
+
+function collectAnswer(q) {
 
     if (q.type === "radio") {
 
-        q.options.forEach(option => {
+        const selected =
+            document.querySelector(
+                'input[name="answer"]:checked'
+            );
 
-            html += `
-                <label>
-                    <input
-                        type="radio"
-                        name="answer"
-                        value="${option}">
-                    ${option}
-                </label>
-            `;
-        });
+        return selected
+            ? selected.value
+            : "";
+    }
 
-    } else if (q.type === "checkbox") {
+    if (q.type === "checkbox") {
 
-        q.options.forEach(option => {
+        return Array.from(
+            document.querySelectorAll(
+                'input[name="answer"]:checked'
+            )
+        ).map(item => item.value);
+    }
 
-            html += `
-                <label>
-                    <input
-                        type="checkbox"
-                        name="answer"
-                        value="${option}">
-                    ${option}
-                </label>
-            `;
-        });
+    if (q.type === "text") {
 
-    } else if (q.type === "text") {
+        return (
+            $("mainAnswer")
+                ?.value ?? ""
+        );
+    }
 
-        html += `
-            <textarea
-                id="mainAnswer"
-                rows="5"
-                style="width:100%;"></textarea>
-        `;
+    if (q.type === "scale") {
 
-    } else if (q.type === "scale") {
-
-        html += `
-            <h3>Hvor godt liker du disse fagene?</h3>
-            <p>1 = liker lite, 10 = liker best</p>
-        `;
+        const values = {};
 
         let i = current;
 
@@ -134,187 +301,64 @@ function showQuestion() {
             questions[i].type === "scale"
             ) {
 
-            html += `
-                <div style="margin-bottom:25px;">
-
-                    <strong>
-                        ${questions[i].text}
-                    </strong>
-
-                    <div class="scale-wrapper">
-
-                        <input
-                            type="range"
-                            min="${questions[i].min}"
-                            max="${questions[i].max}"
-                            value="5"
-                            id="scaleAnswer${i}"
-                            class="scale-slider"
-                            oninput="updateScaleValue(${i}, this.value)">
-
-                        <div id="numbers${i}" class="scale-numbers">
-                            <span>1</span>
-                            <span>2</span>
-                            <span>3</span>
-                            <span>4</span>
-                            <span class="active">5</span>
-                            <span>6</span>
-                            <span>7</span>
-                            <span>8</span>
-                            <span>9</span>
-                            <span>10</span>
-                        </div>
-
-                    </div>
-
-                </div>
-            `;
+            values[
+                questions[i].text
+                ] =
+                $(`scaleAnswer${i}`)
+                    ?.value ?? "";
 
             i++;
         }
+
+        return values;
     }
 
-    if (current < questions.length - 1) {
-
-        html += `
-            <br><br>
-
-            <strong>Vil du si noe mer?</strong>
-
-            <br>
-
-            <textarea
-                id="extraComment"
-                rows="4"
-                style="width:100%;"
-                placeholder="Skriv her hvis du vil utdype svaret ditt"></textarea>
-        `;
-    }
-
-    document.getElementById("answerArea").innerHTML = html;
+    return "";
 }
-
 
 function nextQuestion() {
 
-    console.log(
-        "CLICKED NEXT",
-        current
-    );
+    const q = questions[current];
 
-    try {
-        if (current >= questions.length) {
-            submitSurvey();
-            return;
-        }
+    if (!q) {
+        submitSurvey();
+        return;
+    }
 
-        const q = questions[current];
+    const answer =
+        collectAnswer(q);
 
-        if (!q) {
-            console.error(
-                "Question not found",
-                current
-            );
-            return;
-        }
+    const comment =
+        $("extraComment")
+            ?.value ?? "";
 
-        let answer = "";
+    answers[current] = {
+        question: q.text,
+        answer,
+        comment
+    };
 
-        if (q.type === "radio") {
+    if (q.type === "scale") {
 
-            const selected =
-                document.querySelector(
-                    'input[name="answer"]:checked'
-                );
-
-            answer = selected ? selected.value : "";
-
-        } else if (q.type === "checkbox") {
-
-            answer = [];
-
-            document
-                .querySelectorAll(
-                    'input[name="answer"]:checked'
-                )
-                .forEach(item => {
-
-                    answer.push(item.value);
-
-                });
-
-        } else if (q.type === "text") {
-
-            const text =
-                document.getElementById("mainAnswer");
-
-            answer = text ? text.value : "";
-
-        } else if (q.type === "scale") {
-
-            answer = {};
-
-            let i = current;
-
-            while (
-                i < questions.length &&
-                questions[i].type === "scale"
-                ) {
-
-                const slider =
-                    document.getElementById(
-                        `scaleAnswer${i}`
-                    );
-
-                answer[questions[i].text] =
-                    slider ? slider.value : "";
-
-                i++;
-            }
-        }
-
-        const comment =
-            document.getElementById("extraComment")
-                ? document.getElementById("extraComment").value
-                : "";
-
-        answers[current] = {
-            question: q.text,
-            answer,
-            comment
-        };
-
-        if (q.type === "scale") {
-
-            while (
-                current < questions.length &&
-                questions[current].type === "scale"
-                ) {
-                current++;
-            }
-
-        } else {
-
+        while (
+            current <
+            questions.length &&
+            questions[current].type === "scale"
+            ) {
             current++;
         }
 
-        console.log(
-            "current:",
-            current,
-            "length:",
-            questions.length
-        );
+    } else {
 
-        if (current >= questions.length) {
+        current++;
+    }
 
-            submitSurvey();
-            return;
-        }
-    } catch (e) {
-        console.error(
-            "nextQuestion failed",
-            e
-        );
+    if (
+        current >=
+        questions.length
+    ) {
+        submitSurvey();
+        return;
     }
 
     showQuestion();
@@ -323,7 +367,8 @@ function nextQuestion() {
 function previousQuestion() {
 
     if (
-        document.getElementById("questionPage").style.display !== "none"
+        $("questionPage")
+            .style.display !== "none"
     ) {
 
         if (current > 0) {
@@ -333,53 +378,118 @@ function previousQuestion() {
 
         } else {
 
-            document.getElementById("questionPage").style.display = "none";
-            document.getElementById("mode").style.display = "block";
-
+            hide("questionPage");
+            show("mode");
         }
 
     } else if (
-        document.getElementById("mode").style.display !== "none"
+        $("mode")
+            .style.display !== "none"
     ) {
 
-        document.getElementById("mode").style.display = "none";
-        document.getElementById("start").style.display = "block";
-
+        hide("mode");
+        show("start");
     }
 }
 
-function updateScaleValue(index, value) {
+function updateScaleValue(
+    index,
+    value
+) {
 
-    const numbers = document.querySelectorAll(
-        `#numbers${index} span`
+    const numbers =
+        document.querySelectorAll(
+            `#numbers${index} span`
+        );
+
+    numbers.forEach(
+        number =>
+            number.classList.remove(
+                "active"
+            )
     );
 
-    numbers.forEach(number => {
-        number.classList.remove("active");
-    });
-
-    numbers[value - 1].classList.add("active");
+    numbers[
+    value - 1
+        ]?.classList.add(
+        "active"
+    );
 }
 
 function submitSurvey() {
+
     const surveyData = {
-        kandidatnummer: document.getElementById("pid").value,
-        tidspunkt: new Date().toISOString(),
-        svar: answers
+        kandidatnummer:
+        $("pid").value,
+        tidspunkt:
+            new Date().toISOString(),
+        svar: answers.filter(
+            Boolean
+        )
     };
-    const blob = new Blob(
-        [JSON.stringify(surveyData, null, 2)],
-        {
-            type: "application/json"
-        }
+
+    const json =
+        JSON.stringify(
+            surveyData,
+            (key, value) => {
+
+                if (
+                    value === null ||
+                    value === ""
+                ) {
+                    return undefined;
+                }
+
+                if (
+                    Array.isArray(value) &&
+                    value.length === 0
+                ) {
+                    return undefined;
+                }
+
+                return value;
+            },
+            2
+        );
+
+    const blob =
+        new Blob(
+            [json],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+    link.href =
+        URL.createObjectURL(
+            blob
+        );
+
+    link.download =
+        `survey-${
+            surveyData.kandidatnummer
+        }.json`;
+
+    document.body.appendChild(
+        link
     );
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = `survey-${surveyData.kandidatnummer}.json`;
-    document.body.appendChild(link);
+
     link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(link.href);
-    document.getElementById("questionPage").style.display = "none";
-    document.getElementById("done").style.display = "block";
+
+    document.body.removeChild(
+        link
+    );
+
+    URL.revokeObjectURL(
+        link.href
+    );
+
+    hide("questionPage");
+    show("done");
 }
