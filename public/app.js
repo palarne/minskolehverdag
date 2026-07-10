@@ -174,7 +174,7 @@ function showQuestion() {
         }
     }
 
-    if (current !== 37) {
+    if (current !== questions.length - 1) {
 
         html += `
             <br><br>
