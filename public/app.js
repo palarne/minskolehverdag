@@ -62,6 +62,7 @@ function startSurvey() {
 
         });
 }
+
 function showQuestion() {
 
     const q = questions[current];
@@ -125,7 +126,7 @@ function showQuestion() {
         while (
             i < questions.length &&
             questions[i].type === "scale"
-        ) {
+            ) {
 
             html += `
                 <div style="margin-bottom:25px;">
@@ -233,7 +234,7 @@ function nextQuestion() {
         while (
             i < questions.length &&
             questions[i].type === "scale"
-        ) {
+            ) {
 
             const slider =
                 document.getElementById(
@@ -263,7 +264,7 @@ function nextQuestion() {
         while (
             current < questions.length &&
             questions[current].type === "scale"
-        ) {
+            ) {
             current++;
         }
 
@@ -272,38 +273,38 @@ function nextQuestion() {
         current++;
     }
 
- if (current >= questions.length) {
-
-    fetch("/submit", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            kandidatnummer: document.getElementById("pid").value,
-            tidspunkt: new Date().toISOString(),
-            svar: answers
+    if (current >= questions.length) {
+        console.log("SUBMITTING");
+        fetch("/submit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                kandidatnummer: document.getElementById("pid").value,
+                tidspunkt: new Date().toISOString(),
+                svar: answers
+            })
         })
-    })
-    .then(response => response.json())
-    .then(data => {
+            .then(response => response.json())
+            .then(data => {
 
-        console.log("Svar sendt til server:", data);
+                console.log("Svar sendt til server:", data);
 
-        document.getElementById("questionPage").style.display = "none";
-        document.getElementById("done").style.display = "block";
+                document.getElementById("questionPage").style.display = "none";
+                document.getElementById("done").style.display = "block";
 
-    })
-    .catch(error => {
+            })
+            .catch(error => {
 
-        console.error("Feil ved lagring:", error);
+                console.error("Feil ved lagring:", error);
 
-        alert("Kunne ikke lagre svarene.");
+                alert("Kunne ikke lagre svarene.");
 
-    });
+            });
 
-    return;
-}
+        return;
+    }
 
     showQuestion();
 }
