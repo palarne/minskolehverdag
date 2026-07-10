@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { Resend } from "resend";
+import {Resend} from "resend";
 
 const app = express();
 
@@ -14,36 +14,57 @@ const resend = new Resend(
     process.env.RESEND_API_KEY
 );
 
-app.get("/email-test", async (req, res) => {
+app.post("/submit", async (req, res) => {
 
     try {
 
-        const result =
-            await resend.emails.send({
+        const json =
+            JSON.stringify(
+                req.body,
+                null,
+                2
+            );
 
-                from:
-                    "onboarding@resend.dev",
+        await resend.emails.send({
 
-                to:
-                    "pal.arne.rosdal@tieto.com",
+            from:
+                "onboarding@resend.dev",
 
-                subject:
-                    "Survey test",
+            to:
+                "pal.arne.rosdal@tieto.com",
 
-                text:
-                    "Hello from MinSkolehverdag"
+            subject:
+                `Survey ${req.body.kandidatnummer}`,
 
-            });
+            text:
+                "Survey attached.",
 
-        console.log(result);
+            attachments: [
+                {
+                    filename:
+                        `survey-${req.body.kandidatnummer}.json`,
 
-        res.send("Email sent");
+                    content:
+                        Buffer
+                            .from(json)
+                            .toString("base64")
+                }
+            ]
+        });
+
+        res.json({
+            ok: true
+        });
 
     } catch (error) {
 
         console.error(error);
 
-        res.status(500).send(error.message);
+        res.status(500).json({
+            ok: false,
+            error:
+            error.message
+        });
     }
 });
 

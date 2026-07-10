@@ -416,80 +416,103 @@ function updateScaleValue(
     );
 }
 
-function submitSurvey() {
+async function submitSurvey() {
 
     const surveyData = {
-        kandidatnummer:
-        $("pid").value,
-        tidspunkt:
-            new Date().toISOString(),
-        svar: answers.filter(
-            Boolean
-        )
+        kandidatnummer: $("pid").value,
+        tidspunkt: new Date().toISOString(),
+        svar: answers.filter(Boolean)
     };
 
-    const json =
-        JSON.stringify(
-            surveyData,
-            (key, value) => {
+    const json = JSON.stringify(
+        surveyData,
+        (key, value) => {
 
-                if (
-                    value === null ||
-                    value === ""
-                ) {
-                    return undefined;
-                }
-
-                if (
-                    Array.isArray(value) &&
-                    value.length === 0
-                ) {
-                    return undefined;
-                }
-
-                return value;
-            },
-            2
-        );
-
-    const blob =
-        new Blob(
-            [json],
-            {
-                type:
-                    "application/json"
+            if (value === null || value === "") {
+                return undefined;
             }
-        );
+
+            if (
+                Array.isArray(value) &&
+                value.length === 0
+            ) {
+                return undefined;
+            }
+
+            return value;
+
+        },
+        2
+    );
+
+    //
+    // LAST NED FILEN
+    //
+    const blob = new Blob(
+        [json],
+        {
+            type: "application/json"
+        }
+    );
 
     const link =
-        document.createElement(
-            "a"
-        );
+        document.createElement("a");
 
     link.href =
-        URL.createObjectURL(
-            blob
-        );
+        URL.createObjectURL(blob);
 
     link.download =
-        `survey-${
-            surveyData.kandidatnummer
-        }.json`;
+        `survey-${surveyData.kandidatnummer}.json`;
 
-    document.body.appendChild(
-        link
-    );
+    document.body.appendChild(link);
 
     link.click();
 
-    document.body.removeChild(
-        link
-    );
+    document.body.removeChild(link);
 
-    URL.revokeObjectURL(
-        link.href
-    );
+    URL.revokeObjectURL(link.href);
 
+    //
+    // SEND E-POST
+    //
+    try {
+
+        const response =
+            await fetch("/submit", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: json
+            });
+
+        if (!response.ok) {
+
+            const error =
+                await response.text();
+
+            throw new Error(error);
+        }
+
+        console.log(
+            "Survey emailed successfully"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Email sending failed",
+            error
+        );
+    }
+
+    //
+    // VIS TAKKESIDE
+    //
     hide("questionPage");
     show("done");
 }
