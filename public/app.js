@@ -64,6 +64,12 @@ function startSurvey() {
 }
 
 function showQuestion() {
+    console.log(
+        "Showing question",
+        current + 1,
+        "of",
+        questions.length
+    );
 
     const q = questions[current];
 
@@ -272,6 +278,10 @@ function nextQuestion() {
 
         current++;
     }
+
+    console.log("current =", current);
+    console.log("questions.length =", questions.length);
+    console.log("question type =", q.type);
 
     if (current >= questions.length) {
         console.log("SUBMITTING");
