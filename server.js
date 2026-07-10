@@ -20,36 +20,11 @@ const transporter = nodemailer.createTransport({
 
 app.post("/submit", async (req, res) => {
 
-    try {
+    console.log("SUBMIT RECEIVED");
 
-        const surveyResponse = req.body;
-
-        await transporter.sendMail({
-            from: process.env.SMTP_USER,
-            to: process.env.EMAIL_TO,
-            subject: `Survey response ${surveyResponse.kandidatnummer}`,
-            text: JSON.stringify(
-                surveyResponse,
-                null,
-                2
-            )
-        });
-
-        console.log("Survey response emailed");
-
-        res.json({
-            ok: true
-        });
-
-    } catch (error) {
-
-        console.error(error);
-
-        res.status(500).json({
-            ok: false,
-            error: error.message
-        });
-    }
+    res.json({
+        ok: true
+    });
 });
 
 const PORT = process.env.PORT || 3000;
