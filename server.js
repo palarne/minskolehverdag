@@ -31,7 +31,7 @@ app.post("/submit", async (req, res) => {
                 "onboarding@resend.dev",
 
             to:
-                "sandra.samuelsen@hotmail.no",
+                "sasaa189@osloskolen.no",
 
             subject:
                 `Survey ${req.body.kandidatnummer}`,
